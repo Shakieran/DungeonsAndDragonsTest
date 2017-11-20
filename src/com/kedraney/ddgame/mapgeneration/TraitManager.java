@@ -19,6 +19,6 @@ public class TraitManager
         //SQL DATABASE WILL BE INTEGRATED HERE SOON
         //-------------------------------------------------------
 
-        
+
     }
 }
