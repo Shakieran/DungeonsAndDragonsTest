@@ -20,13 +20,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="TraitCellHolder.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TraitCellHolder.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitCellHolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="747">
-              <caret line="123" column="72" lean-forward="false" selection-start-line="123" selection-start-column="72" selection-end-line="123" selection-end-column="72" />
+            <state relative-caret-position="22">
+              <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#updateMaps#0;class#TraitCellHolder#0" expanded="false" />
                 <element signature="method#pop#0;class#TraitCellHolder#0" expanded="false" />
                 <element signature="method#setForeignLands#0;class#TraitCellHolder#0" expanded="false" />
               </folding>
@@ -34,21 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RaceTraitCalculator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/RaceTraitCalculator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TraitManager.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TraitManager.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="6" column="1" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+            <state relative-caret-position="441">
+              <caret line="21" column="8" lean-forward="false" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -100,9 +91,9 @@
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/MapNode.java" />
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/MapCreationManager.java" />
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/MapAltitudeGen.java" />
-        <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitManager.java" />
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/gamedata/Race.java" />
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitCellHolder.java" />
+        <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitManager.java" />
       </list>
     </option>
   </component>
@@ -1130,14 +1121,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/RaceTraitCalculator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/gamedata/Race.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
@@ -1146,24 +1129,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitManager.java">
+    <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/RaceTraitCalculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" column="1" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitCellHolder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="747">
-          <caret line="123" column="72" lean-forward="false" selection-start-line="123" selection-start-column="72" selection-end-line="123" selection-end-column="72" />
+        <state relative-caret-position="22">
+          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#updateMaps#0;class#TraitCellHolder#0" expanded="false" />
             <element signature="method#pop#0;class#TraitCellHolder#0" expanded="false" />
             <element signature="method#setForeignLands#0;class#TraitCellHolder#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="21" column="8" lean-forward="false" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

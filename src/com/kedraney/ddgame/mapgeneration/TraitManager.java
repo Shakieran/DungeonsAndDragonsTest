@@ -3,25 +3,22 @@ package com.kedraney.ddgame.mapgeneration;
 import java.math.*;
 import java.util.*;
 
-enum Trait
-{
-    FORESTDWELLER(0),
-    MOUNTAINDWELLER(1);
-
-    private final int pos;
-
-    Trait(int pos)
-    {
-        this.pos = pos;
-    }
-
-    int getPos()
-    {
-        return pos;
-    }
-}
-
+//This badboy will hold a TraitCellHolder for each race that exists as a fraction
 public class TraitManager
 {
+    public TraitManager(ArrayList<Integer> applicableRaces, ArrayList<String> allRaces)
+    {
+        ArrayList<String> races = new ArrayList<>();
 
+        for(int i = 0; i < applicableRaces.size(); i++)
+        {
+            races.add(allRaces.get(i));
+        }
+
+        //-------------------------------------------------------
+        //SQL DATABASE WILL BE INTEGRATED HERE SOON
+        //-------------------------------------------------------
+
+        
+    }
 }
