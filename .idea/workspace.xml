@@ -23,11 +23,12 @@
       <file leaf-file-name="TraitCellHolder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitCellHolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="8" column="10" lean-forward="false" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+            <state relative-caret-position="747">
+              <caret line="123" column="72" lean-forward="false" selection-start-line="123" selection-start-column="72" selection-end-line="123" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#TraitCellHolder#0;class#TraitCellHolder#0" expanded="false" />
+                <element signature="method#pop#0;class#TraitCellHolder#0" expanded="false" />
+                <element signature="method#setForeignLands#0;class#TraitCellHolder#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -37,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/RaceTraitCalculator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -47,7 +48,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitManager.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="126">
-              <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+              <caret line="6" column="1" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -99,9 +100,9 @@
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/MapNode.java" />
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/MapCreationManager.java" />
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/MapAltitudeGen.java" />
-        <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitCellHolder.java" />
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitManager.java" />
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/gamedata/Race.java" />
+        <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitCellHolder.java" />
       </list>
     </option>
   </component>
@@ -302,7 +303,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="vcs.Subversion" />
-    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/USER/Documents/JavaProjects/DungeonsAndDragons/src/com/kedraney/ddgame/mapgeneration/MapParser.java" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Kieran Edraney/Desktop/DungeonsAndDragons/src/com/kedraney/ddgame/mapgeneration/TraitManager.java" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -769,7 +770,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -1130,7 +1133,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/RaceTraitCalculator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1146,7 +1149,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
-          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+          <caret line="6" column="1" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1155,11 +1158,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/TraitCellHolder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="8" column="10" lean-forward="false" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+        <state relative-caret-position="747">
+          <caret line="123" column="72" lean-forward="false" selection-start-line="123" selection-start-column="72" selection-end-line="123" selection-end-column="72" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#TraitCellHolder#0;class#TraitCellHolder#0" expanded="false" />
+            <element signature="method#pop#0;class#TraitCellHolder#0" expanded="false" />
+            <element signature="method#setForeignLands#0;class#TraitCellHolder#0" expanded="false" />
           </folding>
         </state>
       </provider>
