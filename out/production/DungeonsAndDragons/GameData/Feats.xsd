@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Feats">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Feat" maxOccurs="unbounded" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Name" type="xs:string"/>
+              <xs:element name="BriefDesc" type="xs:string"/>
+              <xs:element name="LongDesc" type="xs:string"/>
+              <!-- is this feat something you can take many times? -->
+              <xs:element name="Retakeable" type="xs:boolean" default="false"/>
+              <!-- Is the feat something player can choose to take? For example, "read" and "illiteracy" are NOT playerfriendly since the game handles whether they have it or not-->
+              <xs:element name="PlayerFriendly" type="xs:boolean" default="true"/>
+              <!-- A Fighter Bonus feat, Metemagic feat, ect. -->
+              <xs:element name="Types">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Type" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Pre">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="AbilityScores">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Ability" minOccurs="0" maxOccurs="6">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Type">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="Dex"/>
+                                      <xs:enumeration value="Str"/>
+                                      <xs:enumeration value="Con"/>
+                                      <xs:enumeration value="Int"/>
+                                      <xs:enumeration value="Wis"/>
+                                      <xs:enumeration value="Cha"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="Required">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:int">
+                                      <xs:minExclusive value="2"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Feats">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Feat" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BaseAttackBonus" type="xs:nonNegativeInteger" default="0"/>
+                    <!-- to turn or rebuke dead, must have the "Turn Dead" or "Rebuke Dead" ability - ect. -->
+                    <xs:element name="Ability" type="xs:string"/>
+                    <!-- Character level 6 for leadership, ect. -->
+                    <xs:element name="CharacterLevel" type="xs:nonNegativeInteger"/>
+                    <xs:element name="SpellcasterLevel" type="xs:nonNegativeInteger"/>
+                    <xs:element name="ClassLevels">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="ClassLevel" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Class" type="xs:string"/>
+                                <xs:element name="Level" type="xs:nonNegativeInteger"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="SkillRanks">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="SkillRank" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Skill" type="xs:string"/>
+                                <xs:element name="Rank" type="xs:int"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <!-- Above is all I can see in the base feats, so I am adding a bunch of additional values that a.) could come up in other books(i.e. gods/alignment with cleric
+                    book, and b.) I may want if I choose to make my own feat -->
+                    <xs:element name="Alignment">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="None"/>
+                          <xs:enumeration value="Lawful"/>
+                          <xs:enumeration value="Neutral"/>
+                          <xs:enumeration value="Chaotic"/>
+                          <xs:enumeration value="Good"/>
+                          <!-- Neutral -->
+                          <xs:enumeration value="Evil"/>
+                          <xs:enumeration value="Good Lawful"/>
+                          <xs:enumeration value="Good Neutral"/>
+                          <xs:enumeration value="Good Chaotic"/>
+                          <xs:enumeration value="Neutral Lawful"/>
+                          <xs:enumeration value="Neutral Neutral"/>
+                          <xs:enumeration value="Neutral Chaotic"/>
+                          <xs:enumeration value="Evil Lawful"/>
+                          <xs:enumeration value="Evil Neutral"/>
+                          <xs:enumeration value="Evil Chaotic"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="MagicType" >
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="Arcane"/>
+                          <xs:enumeration value="Divine"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Benefits">
+                <xs:complexType>
+                  <xs:sequence>
+                    
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

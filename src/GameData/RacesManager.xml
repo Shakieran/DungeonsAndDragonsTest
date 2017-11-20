@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : RacesManager.xml
+    Created on : 2017/6/12
+    Author     : 
+    Description:
+        Purpose of the document follows.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Races">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Race">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Name" type="xs:string" />
+              <xs:element name="NamePlural" type="xs:string" />
+              <xs:element name="NameAdjective" type="xs:string" />
+              <xs:element name="Dex" type="xs:int" default="0"/>
+              <xs:element name="Str" type="xs:int" default="0"/>
+              <xs:element name="Con" type="xs:int" default="0"/>
+              <xs:element name="Int" type="xs:int" default="0"/>
+              <xs:element name="Wis" type="xs:int" default="0"/>
+              <xs:element name="Cha" type="xs:int" default="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,2532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : Classes.xml
+    Created on : 2017/6/11
+    Author     : Kieran Edraney
+    Description: Holds class("job") 
+        Purpose of the document follows.
+-->
+<Classes>
+<!--<Table name="Job">
+		<Column name="Name" type="text"/>
+		<Column name="NamePlural" type="text"/>
+		<Column name="NameAdjective" type="text"/>
+		<!- Attribute bonuses - begins at 0 -->
+<!--		<Column name="HitDie" type="integer" default="6"/>
+		
+		<Column name="Alignment" type="text" default="None"/>
+		
+	</Table>
+	-->
+	<Job>
+		<Name>Barbarian</Name>
+		<NamePlural>Barbarians</NamePlural>
+		<NameAdjective>Barbarian</NameAdjective>
+    <ShortDesc></ShortDesc>
+		<HitDie>12</HitDie>
+		<!-- Unallowed Alignments -->
+		<UAlignments>Lawful</UAlignments>
+		<!-- Required Alignments -->
+		<Alignments>None</Alignments>
+		<!-- (X+int mod)*4 at level 1, X+int mod every level thereafter -->
+		<SkillBonus>4</SkillBonus>
+		<ClassSkills>
+			<Skill>Climb</Skill>
+			<Skill>Craft</Skill>
+			<Skill>Handle Animal</Skill>
+			<Skill>Intimidate></Skill>
+			<Skill>Jump</Skill>
+			<Skill>Listen</Skill>
+			<Skill>Ride</Skill>
+			<Skill>Survival</Skill>
+			<Skill>Swim</Skill>
+		</ClassSkills>
+		<!-- Save Bonus Progression -->
+		<Fort>Good</Fort>
+		<Ref>Bad</Ref>
+		<Will>Bad</Will>
+		<!-- Can take on the class after you leave it? -->
+		<Returnable reason="alignment">false</Returnable>
+		<!-- Base Attack Bonuses -->
+		<BaseAttack>Best</BaseAttack>
+		<Magic exist="false"></Magic>
+		<!-- Specials have their own benefits as listed below -->
+		<Special>
+			<Illiterate use="false">true</Illiterate>
+			<FastMovement use="true">
+				<!-- Benefits per level -->
+				<Level1>
+					<Pre>
+						<HeavyLoad>false</HeavyLoad>
+						<HeavyArmor>false</HeavyArmor>
+					</Pre>
+					<Benefit>
+						<Speed>10</Speed>
+					</Benefit>
+				</Level1>
+				<!-- Levels overwrite other level benefits, so if at level2 the speed was +20 instead of +10, then it would say <Speed>20</Speed> since level 1 is now irrelevant -->
+				<!-- HeavyLoad and HeavyArmor would stay though, unless readressed -->
+			</FastMovement>
+			<!-- rage is a no go if gone lawful -->
+			<Rage use="true">
+				<!-- Things like "Use" define the special abilities across all levels, hence why it's here -->
+				<Level1>
+					<Benefit>
+						<TStr>4</TStr>
+						<TCon>4</TCon>
+						<TWill type="morale">2</TWill>
+						<TArmorClass>-2</TArmorClass>
+						<!-- l = level, so 2*l = 2*level -->
+						<THP>2*l</THP>
+						<!-- Restrict skills of the following types(3 of them), excluding the 4 listed -->
+						<RestrictSkillType exclude="Balance,Escape Artist,Ride">Dex</RestrictSkillType>
+						<RestrictSkillType>Int</RestrictSkillType>
+						<RestrictSkillType exclude="Intimidate">Cha</RestrictSkillType>
+						<RestrictSkill>Concentration</RestrictSkill>
+						<Uses increment="day">1</Uses>
+						<Duration>3</Duration>
+						<DurationMod>Con</DurationMod>
+						<!-- It means once per encounter -->
+						<PerEncounter>1</PerEncounter>
+					</Benefit>
+					<Post>
+						<Exhaustion>fatigued</Exhaustion>
+					</Post>
+				</Level1>
+				<Level4>
+					<Benefit>
+						<Uses increment="day">2</Uses>
+					</Benefit>
+				</Level4>
+				<Level8>
+					<Benefit>
+						<Uses increment="day">3</Uses>
+					</Benefit>
+				</Level8>
+				<Level11>
+					<Benefit>
+						<TStr>6</TStr>
+						<TCon>6</TCon>
+						<TWill type="morale">3</TWill>
+					</Benefit>
+				</Level11>
+				<Level12>
+					<Benefit>
+						<Uses increment="day">4</Uses>
+					</Benefit>
+				</Level12>
+				<Level14>
+					<Benefit>
+						<TWill versus="enchantment">4</TWill>
+					</Benefit>
+				</Level14>
+				<Level16>
+					<Benefit>
+						<Uses increment="day">5</Uses>
+					</Benefit>
+				</Level16>
+				<Level17>
+					<Post>
+						<Exhaustion>none</Exhaustion>
+					</Post>
+				</Level17>
+				<Level20>
+					<Benefit>
+						<Uses increment="day">6</Uses>
+						<TStr>8</TStr>
+						<TCon>8</TCon>
+						<TWill type="morale">4</TWill>
+					</Benefit>
+				</Level20>
+			</Rage>
+			<UncannyDodge use="false">
+				<Level2>
+					<Pre>
+						<Concious>false</Concious>
+					</Pre>
+					<Benefit>
+						<DexBonusAC>true</DexBonusAC>
+					</Benefit>
+				</Level2>
+				<Level5>
+					<Benefit>
+						<Flankable>false</Flankable>
+						<!-- advantage means +4 for rogue to sneak attack barbarian -->
+						<!-- advantage stacks across levels - KEEP NOTE OF THIS -->
+						<SneakAttack advantage="4" stack="true">false</SneakAttack>
+					</Benefit>
+				</Level5>
+			</UncannyDodge>
+			<TrapSense stack="true" use="false">
+				<Level3>
+					<Benefit>
+						<Will versus="trap">1</Will>
+						<!-- dodge is only AC -->
+						<Dodge versus="trap">1</Dodge>
+					</Benefit>
+				</Level3>
+				<Level6>
+					<Benefit>
+						<Will versus="trap">2</Will>
+						<!-- dodge is only AC -->
+						<Dodge versus="trap">2</Dodge>
+					</Benefit>
+				</Level6>
+				<Level9>
+					<Benefit>
+						<Will versus="trap">3</Will>
+						<!-- dodge is only AC -->
+						<Dodge versus="trap">3</Dodge>
+					</Benefit>
+				</Level9>
+				<Level12>
+					<Benefit>
+						<Will versus="trap">4</Will>
+						<!-- dodge is only AC -->
+						<Dodge versus="trap">4</Dodge>
+					</Benefit>
+				</Level12>
+				<Level15>
+					<Benefit>
+						<Will versus="trap">5</Will>
+						<!-- dodge is only AC -->
+						<Dodge versus="trap">5</Dodge>
+					</Benefit>
+				</Level15>
+				<Level18>
+					<Benefit>
+						<Will versus="trap">6</Will>
+						<!-- dodge is only AC -->
+						<Dodge versus="trap">6</Dodge>
+					</Benefit>
+				</Level18>
+			</TrapSense>
+			<DamageReduction use="false">
+				<Level7>
+					<Benefit>
+						<DR versus="weapon/natural attack">1</DR>
+					</Benefit>
+				</Level7>
+				<Level10>
+					<Benefit>
+						<DR versus="weapon/natural attack">2</DR>
+					</Benefit>
+				</Level10>
+				<Level13>
+					<Benefit>
+						<DR versus="weapon/natural attack">3</DR>
+					</Benefit>
+				</Level13>
+				<Level16>
+					<Benefit>
+						<DR versus="weapon/natural attack">4</DR>
+					</Benefit>
+				</Level16>
+				<Level19>
+					<Benefit>
+						<DR versus="weapon/natural attack">5</DR>
+					</Benefit>
+				</Level19>
+			</DamageReduction>
+		</Special>
+		<!-- ADD THESE FOR BARBARIAN! -->
+		<Proficiencies>
+			<Proficiency>Simple</Proficiency>
+			<Proficiency>Martial</Proficiency>
+			<Proficiency>Light</Proficiency>
+			<Proficiency>Medium</Proficiency>
+			<!-- Shields ignores tower shields -->
+			<Proficiency>Shields</Proficiency>
+		</Proficiencies>
+	</Job>
+	<Job>
+		<Name>Bard</Name>
+		<NamePlural>Bards</NamePlural>
+		<NameAdjective>Bardic</NameAdjective>
+    <ShortDesc></ShortDesc>
+		<HitDie>6</HitDie>
+		<!-- Unallowed Alignments -->
+		<UAlignments>Lawful</UAlignments>
+		<!-- Required Alignments -->
+		<Alignments>None</Alignments>
+		<!-- (X+int mod)*4 at level 1, X+int mod every level thereafter -->
+		<SkillBonus>6</SkillBonus>
+		<ClassSkills>
+			<Skill>Appraise</Skill>
+			<Skill>Balance</Skill>
+			<Skill>Bluff</Skill>
+			<Skill>Climb</Skill>
+			<Skill>Concentration</Skill>
+			<Skill>Craft</Skill>
+			<Skill>Decipher Script</Skill>
+			<Skill>Diplomacy</Skill>
+			<Skill>Disguise</Skill>
+			<Skill>Escape Artist</Skill>
+			<Skill>Gather Information</Skill>
+			<Skill>Hide</Skill>
+			<Skill>Jump</Skill>
+			<Skill>Knowledge</Skill>
+			<Skill>Listen</Skill>
+			<Skill>Move Silenty</Skill>
+			<Skill>Perform</Skill>
+			<Skill>Profession</Skill>
+			<Skill>Sense Motive</Skill>
+			<Skill>Sleight of Hand</Skill>
+			<Skill>Spellcraft</Skill>
+			<Skill>Swim</Skill>
+			<Skill>Tumble</Skill>
+			<Skill>Use Magic Device</Skill>
+		</ClassSkills>
+		<!-- Save Bonus Progression -->
+		<Fort>Bad</Fort>
+		<Ref>Good</Ref>
+		<Will>Good</Will>
+		<!-- Can take on the class after you leave it? -->
+		<Returnable reason="alignment">false</Returnable>
+		<!-- Base Attack Bonuses -->
+		<BaseAttack>Good</BaseAttack>
+		<Magic exist="true">
+			<!-- Just whether or not spells are prepared ahead of time -->
+			<Prepared>false</Prepared>
+			<!-- Ability that governs spells -->
+			<SpellAbility>Cha</SpellAbility>
+			<!-- Spells by level that the class has -->
+			<Spells>
+			
+			</Spells>
+			<!-- Below is spells per day style things -->
+			<SpellProgression>
+				<SpellsPerDay>
+				<Level1>
+					<!-- Spell1 = level 0 spells -->
+					<Spell0>2</Spell0>
+					<!-- Below regulates max spell level you know, so if you have a Cha mod of +50, you still only get more level 0 spells in this case -->
+					<MaxSpellLevel>0</MaxSpellLevel>
+				</Level1>
+				<Level2>
+					<Spell0>3</Spell0>
+					<MaxSpellLevel>1</MaxSpellLevel>
+				</Level2>
+				<Level3>
+					<Spell1>1</Spell1>
+				</Level3>
+				<Level4>
+					<Spell1>2</Spell1>
+					<MaxSpellLevel>2</MaxSpellLevel>
+				</Level4>
+				<Level5>
+					<Spell1>3</Spell1>
+					<Spell2>1</Spell2>
+				</Level5>
+				<Level6>
+					<Spell2>2</Spell2>
+				</Level6>
+				<Level7>
+					<MaxSpellLevel>3</MaxSpellLevel>
+				</Level7>
+				<Level8>
+					<Spell3>1</Spell3>
+				</Level8>
+				<Level9>
+					<Spell3>2</Spell3>
+				</Level9>
+				<Level10>
+					<MaxSpellLevel>4</MaxSpellLevel>
+				</Level10>
+				<Level11>
+					<Spell3>3</Spell3>
+					<Spell4>1</Spell4>
+				</Level11>
+				<Level12>
+					<Spell4>2</Spell4>
+				</Level12>
+				<Level13>
+					<MaxSpellLevel>5</MaxSpellLevel>
+				</Level13>
+				<Level14>
+					<Spell0>4</Spell0>
+					<Spell4>3</Spell4>
+					<Spell5>1</Spell5><!-- MARKER -->
+				</Level14>
+				<Level15>
+					<Spell1>4</Spell1>
+					<Spell5>2</Spell5>
+				</Level15>
+				<Level16>
+					<Spell2>4</Spell2>
+					<MaxSpellLevel>6</MaxSpellLevel>
+				</Level16>
+				<Level17>
+					<Spell3>4</Spell3>
+					<Spell5>3</Spell5>
+					<Spell6>1</Spell6>
+				</Level17>
+				<Level18>
+					<Spell4>4</Spell4>
+					<Spell6>2</Spell6>
+				</Level18>
+				<Level19>
+					<Spell5>4</Spell5>
+					<Spell6>3</Spell6>
+				</Level19>
+				<Level20>
+					<Spell6>4</Spell6>
+				</Level20>
+			</SpellsPerDay>
+				<SpellsKnown>
+				<Level1>
+					<!-- Spell1 = level 0 spells -->
+					<Spell0>4</Spell0>
+				</Level1>
+				<Level2>
+					<Spell0>5</Spell0>
+					<Spell1>2</Spell1>
+				</Level2>
+				<Level3>
+					<Spell0>6</Spell0>
+					<Spell1>3</Spell1>
+				</Level3>
+				<Level4>
+					<Spell2>2</Spell2>
+				</Level4>
+				<Level5>
+					<Spell1>4</Spell1>
+					<Spell2>3</Spell2>
+				</Level5>
+				<Level6>
+
+				</Level6>
+				<Level7>
+					<Spell2>4</Spell2>
+					<Spell3>2</Spell3>
+				</Level7>
+				<Level8>
+					<Spell3>3</Spell3>
+				</Level8>
+				<Level9>
+
+				</Level9>
+				<Level10>
+					<Spell3>4</Spell3>
+					<Spell4>2</Spell4>
+				</Level10>
+				<Level11>
+					<Spell4>3</Spell4>
+				</Level11>
+				<Level12>
+
+				</Level12>
+				<Level13>
+					<Spell4>4</Spell4>
+					<Spell5>2</Spell5>
+				</Level13>
+				<Level14>
+					<Spell5>3</Spell5>
+				</Level14>
+				<Level15>
+
+				</Level15>
+				<Level16>
+					<Spell1>5</Spell1>
+					<Spell5>4</Spell5>
+					<Spell6>2</Spell6>
+				</Level16>
+				<Level17>
+					<Spell2>5</Spell2>
+					<Spell6>3</Spell6>
+				</Level17>
+				<Level18>
+					<Spell3>5</Spell3>
+				</Level18>
+				<Level19>
+					<Spell4>5</Spell4>
+					<Spell6>4</Spell6>
+				</Level19>
+				<Level20>
+					<Spell5>5</Spell5>
+				</Level20>				
+			</SpellsKnown>
+			</SpellProgression>
+		</Magic>
+		<!-- Specials have their own benefits as listed below -->
+		<Special>
+			<BardicKnowledge use="true">
+				<Level1>
+					<Benefit>
+						<!-- -1 = infinite -->
+						<Uses increment="day">-1</Uses>
+						<!-- int + bardic level = skill check for a knowledge roll -->
+						<SkillBonus skill="knowledge" add="Class Level">int</SkillBonus>
+						<!-- Below means 5+ ranks in Knowledge(History) confers a +2 bonus -->
+						<SkillSynergy skill="Knowledge(History)">2</SkillSynergy>
+					</Benefit>
+				</Level1>
+			</BardicKnowledge>
+			<!-- BARDIC MUSIC IS UNDONE -->
+			<BardicMusic use="true">
+				<Level1>
+					<Uses increment="day">1</Uses>
+				</Level1>
+				<!-- -1 means every level this will happen -->
+				<Level-1>
+					<Uses increment="day">1</Uses>
+				</Level-1>
+			</BardicMusic>
+		</Special>
+		<Proficiencies>
+			<Proficiency>Simple</Proficiency>
+			<Proficiency>Longsword</Proficiency>
+			<Proficiency>Rapier</Proficiency>
+			<Proficiency>Sap</Proficiency>
+			<Proficiency>Short Sword</Proficiency>
+			<Proficiency>Shortbow</Proficiency>
+			<Proficiency>Whip</Proficiency>
+			<!-- give weapons "tags", if any are matches then you're proficient -->
+			<Proficiency>Light Armor</Proficiency>
+			<Proficiency>Shield</Proficiency>
+		</Proficiencies>
+	</Job>
+	<Job>
+		<Name>Cleric</Name>
+		<NamePlural>Clerics</NamePlural>
+		<NameAdjective>Clerical</NameAdjective>
+    <ShortDesc></ShortDesc>
+		<HitDie>10</HitDie>
+		<!-- Unallowed Alignments -->
+		<UAlignments>Lawful</UAlignments>
+		<!-- Required Alignments -->
+		<Alignments>None</Alignments>
+		<!-- (X+int mod)*4 at level 1, X+int mod every level thereafter -->
+		<SkillBonus>6</SkillBonus>
+		<ClassSkills>
+			<Skill>Appraise</Skill>
+			<Skill>Balance</Skill>
+			<Skill>Bluff</Skill>
+			<Skill>Climb</Skill>
+			<Skill>Concentration</Skill>
+			<Skill>Craft</Skill>
+			<Skill>Decipher Script</Skill>
+			<Skill>Diplomacy</Skill>
+			<Skill>Disguise</Skill>
+			<Skill>Escape Artist</Skill>
+			<Skill>Gather Information</Skill>
+			<Skill>Hide</Skill>
+			<Skill>Jump</Skill>
+			<Skill>Knowledge</Skill>
+			<Skill>Listen</Skill>
+			<Skill>Move Silenty</Skill>
+			<Skill>Perform</Skill>
+			<Skill>Profession</Skill>
+			<Skill>Sense Motive</Skill>
+			<Skill>Sleight of Hand</Skill>
+			<Skill>Spellcraft</Skill>
+			<Skill>Swim</Skill>
+			<Skill>Tumble</Skill>
+			<Skill>Use Magic Device</Skill>
+		</ClassSkills>
+		<!-- Save Bonus Progression -->
+		<Fort>Bad</Fort>
+		<Ref>Good</Ref>
+		<Will>Good</Will>
+		<!-- Can take on the class after you leave it? -->
+		<Returnable reason="alignment">false</Returnable>
+		<!-- Base Attack Bonuses -->
+		<BaseAttack>Good</BaseAttack>
+		<Magic exist="true">
+			<!-- Just whether or not spells are prepared ahead of time -->
+			<Prepared>false</Prepared>
+			<!-- Ability that governs spells -->
+			<SpellAbility>Int</SpellAbility>
+			<!-- Spells by level that the class has -->
+			<Spells>
+			
+			</Spells>
+			<!-- Below is spells per day style things -->
+			<SpellProgression>
+				<SpellsPerDay>
+					<Level1>
+						<!-- Spell1 = level 0 spells -->
+						<Spell0>2</Spell0>
+						<!-- Below regulates max spell level you know, so if you have a Cha mod of +50, you still only get more level 0 spells in this case -->
+						<MaxSpellLevel>0</MaxSpellLevel>
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+
+					</Level14>
+					<Level15>
+
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level19>
+
+					</Level19>
+					<Level20>
+
+					</Level20>
+			</SpellsPerDay>
+				<SpellsKnown>
+					<Level1>
+						<!-- Spell0 = level 0 spells -->
+
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+	
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+	
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+	
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+												
+					</Level14>
+					<Level15>
+	
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level9>
+
+					</Level9>
+					<Level20>
+
+					</Level20>				
+				</SpellsKnown>
+			</SpellProgression>
+		</Magic>
+		<!-- Specials have their own benefits as listed below -->
+		<Special>
+		</Special>
+		<Proficiencies>
+		</Proficiencies>
+	</Job>
+	<Job>
+		<Name>Druid</Name>
+		<NamePlural>Bards</NamePlural>
+		<NameAdjective>Bardic</NameAdjective>
+		<HitDie>6</HitDie>
+		<!-- Unallowed Alignments -->
+		<UAlignments>Lawful</UAlignments>
+		<!-- Required Alignments -->
+		<Alignments>None</Alignments>
+		<!-- (X+int mod)*4 at level 1, X+int mod every level thereafter -->
+		<SkillBonus>6</SkillBonus>
+		<ClassSkills>
+			<Skill>Appraise</Skill>
+			<Skill>Balance</Skill>
+			<Skill>Bluff</Skill>
+			<Skill>Climb</Skill>
+			<Skill>Concentration</Skill>
+			<Skill>Craft</Skill>
+			<Skill>Decipher Script</Skill>
+			<Skill>Diplomacy</Skill>
+			<Skill>Disguise</Skill>
+			<Skill>Escape Artist</Skill>
+			<Skill>Gather Information</Skill>
+			<Skill>Hide</Skill>
+			<Skill>Jump</Skill>
+			<Skill>Knowledge</Skill>
+			<Skill>Listen</Skill>
+			<Skill>Move Silenty</Skill>
+			<Skill>Perform</Skill>
+			<Skill>Profession</Skill>
+			<Skill>Sense Motive</Skill>
+			<Skill>Sleight of Hand</Skill>
+			<Skill>Spellcraft</Skill>
+			<Skill>Swim</Skill>
+			<Skill>Tumble</Skill>
+			<Skill>Use Magic Device</Skill>
+		</ClassSkills>
+		<!-- Save Bonus Progression -->
+		<Fort>Bad</Fort>
+		<Ref>Good</Ref>
+		<Will>Good</Will>
+		<!-- Can take on the class after you leave it? -->
+		<Returnable reason="alignment">false</Returnable>
+		<!-- Base Attack Bonuses -->
+		<BaseAttack>Good</BaseAttack>
+		<Magic exist="true">
+			<!-- Just whether or not spells are prepared ahead of time -->
+			<Prepared>false</Prepared>
+			<!-- Ability that governs spells -->
+			<SpellAbility>Int</SpellAbility>
+			<!-- Spells by level that the class has -->
+			<Spells>
+			
+			</Spells>
+			<!-- Below is spells per day style things -->
+			<SpellProgression>
+				<SpellsPerDay>
+					<Level1>
+						<!-- Spell1 = level 0 spells -->
+						<Spell0>2</Spell0>
+						<!-- Below regulates max spell level you know, so if you have a Cha mod of +50, you still only get more level 0 spells in this case -->
+						<MaxSpellLevel>0</MaxSpellLevel>
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+
+					</Level14>
+					<Level15>
+
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level19>
+
+					</Level19>
+					<Level20>
+
+					</Level20>
+			</SpellsPerDay>
+				<SpellsKnown>
+					<Level1>
+						<!-- Spell0 = level 0 spells -->
+
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+	
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+	
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+	
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+												
+					</Level14>
+					<Level15>
+	
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level9>
+
+					</Level9>
+					<Level20>
+
+					</Level20>				
+				</SpellsKnown>
+			</SpellProgression>
+		</Magic>
+		<!-- Specials have their own benefits as listed below -->
+		<Special>
+		</Special>
+		<Proficiencies>
+		</Proficiencies>
+	</Job>
+	<Job>
+		<Name>Fighter</Name>
+		<NamePlural>Fighters</NamePlural>
+		<NameAdjective>Fighter</NameAdjective>
+		<HitDie>10</HitDie>
+		<!-- Unallowed Alignments -->
+		<UAlignments>None</UAlignments>
+		<!-- Required Alignments -->
+		<Alignments>None</Alignments>
+		<!-- (X+int mod)*4 at level 1, X+int mod every level thereafter -->
+		<SkillBonus>2</SkillBonus>
+		<!-- update class skills -->
+		<ClassSkills>
+			<Skill>Appraise</Skill>
+			<Skill>Balance</Skill>
+			<Skill>Bluff</Skill>
+			<Skill>Climb</Skill>
+			<Skill>Concentration</Skill>
+			<Skill>Craft</Skill>
+			<Skill>Decipher Script</Skill>
+			<Skill>Diplomacy</Skill>
+			<Skill>Disguise</Skill>
+			<Skill>Escape Artist</Skill>
+			<Skill>Gather Information</Skill>
+			<Skill>Hide</Skill>
+			<Skill>Jump</Skill>
+			<Skill>Knowledge</Skill>
+			<Skill>Listen</Skill>
+			<Skill>Move Silenty</Skill>
+			<Skill>Perform</Skill>
+			<Skill>Profession</Skill>
+			<Skill>Sense Motive</Skill>
+			<Skill>Sleight of Hand</Skill>
+			<Skill>Spellcraft</Skill>
+			<Skill>Swim</Skill>
+			<Skill>Tumble</Skill>
+			<Skill>Use Magic Device</Skill>
+		</ClassSkills>
+		<!-- Save Bonus Progression -->
+		<Fort>Good</Fort>
+		<Ref>Bad</Ref>
+		<Will>Bad</Will>
+		<!-- Can take on the class after you leave it? -->
+		<Returnable reason="alignment">true</Returnable>
+		<!-- Base Attack Bonuses -->
+		<BaseAttack>Best</BaseAttack>
+		<Magic exist="false">
+			<!-- Just whether or not spells are prepared ahead of time -->
+			<Prepared>false</Prepared>
+			<!-- Ability that governs spells -->
+			<SpellAbility>Int</SpellAbility>
+			<!-- Spells by level that the class has -->
+			<Spells>
+			
+			</Spells>
+			<!-- Below is spells per day style things -->
+			<SpellProgression>
+				<SpellsPerDay>
+					<Level1>
+						<!-- Spell1 = level 0 spells -->
+						<Spell0>2</Spell0>
+						<!-- Below regulates max spell level you know, so if you have a Cha mod of +50, you still only get more level 0 spells in this case -->
+						<MaxSpellLevel>0</MaxSpellLevel>
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+
+					</Level14>
+					<Level15>
+
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level19>
+
+					</Level19>
+					<Level20>
+
+					</Level20>
+			</SpellsPerDay>
+				<SpellsKnown>
+					<Level1>
+						<!-- Spell0 = level 0 spells -->
+
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+	
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+	
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+	
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+												
+					</Level14>
+					<Level15>
+	
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level9>
+
+					</Level9>
+					<Level20>
+
+					</Level20>				
+				</SpellsKnown>
+			</SpellProgression>
+		</Magic>
+		<!-- Specials have their own benefits as listed below -->
+		<Special>
+			<BonusFeat>
+				<Level1>
+					<FreeFeat>1</FreeFeat>
+				</Level1>
+				<!-- since -1 is every level, -2 is every even level, -3 is every 3rd level, ect. -->
+				<Level-2>
+					<FreeFeat>1</FreeFeat>
+				</Level-2>
+			</BonusFeat>
+		</Special>
+		<!-- Finish proficiencies later -->
+		<Proficiencies>
+		</Proficiencies>
+	</Job>
+	<Job>
+		<Name>Monk</Name>
+		<NamePlural>Monks</NamePlural>
+		<NameAdjective>Monk</NameAdjective>
+		<HitDie>8</HitDie>
+		<!-- Unallowed Alignments -->
+		<UAlignments>None</UAlignments>
+		<!-- Required Alignments -->
+		<Alignments>Lawful</Alignments>
+		<!-- (X+int mod)*4 at level 1, X+int mod every level thereafter -->
+		<SkillBonus>4</SkillBonus>
+		<ClassSkills>
+			<Skill>Balance</Skill>
+			<Skill>Climb</Skill>
+			<Skill>Concentration</Skill>
+			<Skill>Craft</Skill>
+			<Skill>Diplomacy</Skill>
+			<Skill>Disguise</Skill>
+			<Skill>Escape Artist</Skill>
+			<Skill>Hide</Skill>
+			<Skill>Jump</Skill>
+			<Skill>Knowledge(Arcana)</Skill>
+			<Skill>Listen</Skill>
+			<Skill>Move Silenty</Skill>
+			<Skill>Perform</Skill>
+			<Skill>Profession</Skill>
+			<Skill>Sense Motive</Skill>
+			<Skill>Spot</Skill>
+			<Skill>Swim</Skill>
+			<Skill>Tumble</Skill>
+		</ClassSkills>
+		<!-- Save Bonus Progression -->
+		<Fort>Good</Fort>
+		<Ref>Bad</Ref>
+		<Will>Bad</Will>
+		<!-- Can take on the class after you leave it? -->
+		<Returnable reason="alignment">true</Returnable>
+		<!-- Base Attack Bonuses -->
+		<BaseAttack>Best</BaseAttack>
+		<Magic exist="false">
+			<!-- Just whether or not spells are prepared ahead of time -->
+			<Prepared>false</Prepared>
+			<!-- Ability that governs spells -->
+			<SpellAbility>Int</SpellAbility>
+			<!-- Spells by level that the class has -->
+			<Spells>
+			
+			</Spells>
+			<!-- Below is spells per day style things -->
+			<SpellProgression>
+				<SpellsPerDay>
+					<Level1>
+						<!-- Spell1 = level 0 spells -->
+						<Spell0>2</Spell0>
+						<!-- Below regulates max spell level you know, so if you have a Cha mod of +50, you still only get more level 0 spells in this case -->
+						<MaxSpellLevel>0</MaxSpellLevel>
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+
+					</Level14>
+					<Level15>
+
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level19>
+
+					</Level19>
+					<Level20>
+
+					</Level20>
+			</SpellsPerDay>
+				<SpellsKnown>
+					<Level1>
+						<!-- Spell0 = level 0 spells -->
+
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+	
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+	
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+	
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+												
+					</Level14>
+					<Level15>
+	
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level9>
+
+					</Level9>
+					<Level20>
+
+					</Level20>				
+				</SpellsKnown>
+			</SpellProgression>
+		</Magic>
+		<!-- Specials have their own benefits as listed below -->
+		<Special>
+			<BonusFeat>
+				<Level1>
+					<FreeFeat>1</FreeFeat>
+				</Level1>
+				<!-- since -1 is every level, -2 is every even level, -3 is every 3rd level, ect. -->
+				<Level-2>
+					<FreeFeat>1</FreeFeat>
+				</Level-2>
+			</BonusFeat>
+		</Special>
+		<!-- Finish proficiencies later -->
+		<Proficiencies>
+		</Proficiencies>
+	</Job>
+	<Job>
+		<Name>Paladin</Name>
+		<NamePlural>Paladins</NamePlural>
+		<NameAdjective>Paladin</NameAdjective>
+		<HitDie>10</HitDie>
+		<!-- Unallowed Alignments -->
+		<UAlignments>None</UAlignments>
+		<!-- Required Alignments -->
+		<Alignments></Alignments>
+		<!-- (X+int mod)*4 at level 1, X+int mod every level thereafter -->
+		<SkillBonus>2</SkillBonus>
+		<!-- update class skills -->
+		<ClassSkills>
+			<Skill>Appraise</Skill>
+			<Skill>Balance</Skill>
+			<Skill>Bluff</Skill>
+			<Skill>Climb</Skill>
+			<Skill>Concentration</Skill>
+			<Skill>Craft</Skill>
+			<Skill>Decipher Script</Skill>
+			<Skill>Diplomacy</Skill>
+			<Skill>Disguise</Skill>
+			<Skill>Escape Artist</Skill>
+			<Skill>Gather Information</Skill>
+			<Skill>Hide</Skill>
+			<Skill>Jump</Skill>
+			<Skill>Knowledge</Skill>
+			<Skill>Listen</Skill>
+			<Skill>Move Silenty</Skill>
+			<Skill>Perform</Skill>
+			<Skill>Profession</Skill>
+			<Skill>Sense Motive</Skill>
+			<Skill>Sleight of Hand</Skill>
+			<Skill>Spellcraft</Skill>
+			<Skill>Swim</Skill>
+			<Skill>Tumble</Skill>
+			<Skill>Use Magic Device</Skill>
+		</ClassSkills>
+		<!-- Save Bonus Progression -->
+		<Fort>Good</Fort>
+		<Ref>Bad</Ref>
+		<Will>Bad</Will>
+		<!-- Can take on the class after you leave it? -->
+		<Returnable reason="alignment">true</Returnable>
+		<!-- Base Attack Bonuses -->
+		<BaseAttack>Best</BaseAttack>
+		<Magic exist="true">
+			<!-- Just whether or not spells are prepared ahead of time -->
+			<Prepared>false</Prepared>
+			<!-- Ability that governs spells -->
+			<SpellAbility>Int</SpellAbility>
+			<!-- Spells by level that the class has -->
+			<Spells>
+			
+			</Spells>
+			<!-- Below is spells per day style things -->
+			<SpellProgression>
+				<SpellsPerDay>
+					<Level1>
+						<!-- Spell1 = level 0 spells -->
+						<Spell0>2</Spell0>
+						<!-- Below regulates max spell level you know, so if you have a Cha mod of +50, you still only get more level 0 spells in this case -->
+						<MaxSpellLevel>0</MaxSpellLevel>
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+
+					</Level14>
+					<Level15>
+
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level19>
+
+					</Level19>
+					<Level20>
+
+					</Level20>
+			</SpellsPerDay>
+				<SpellsKnown>
+					<Level1>
+						<!-- Spell0 = level 0 spells -->
+
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+	
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+	
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+	
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+												
+					</Level14>
+					<Level15>
+	
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level9>
+
+					</Level9>
+					<Level20>
+
+					</Level20>				
+				</SpellsKnown>
+			</SpellProgression>
+		</Magic>
+		<!-- Specials have their own benefits as listed below -->
+		<Special>
+			<BonusFeat>
+				<Level1>
+					<FreeFeat>1</FreeFeat>
+				</Level1>
+				<!-- since -1 is every level, -2 is every even level, -3 is every 3rd level, ect. -->
+				<Level-2>
+					<FreeFeat>1</FreeFeat>
+				</Level-2>
+			</BonusFeat>
+		</Special>
+		<!-- Finish proficiencies later -->
+		<Proficiencies>
+		</Proficiencies>
+	</Job>
+	<Job>
+		<Name>Ranger</Name>
+		<NamePlural>Rangers</NamePlural>
+		<NameAdjective>Ranger</NameAdjective>
+		<HitDie>10</HitDie>
+		<!-- Unallowed Alignments -->
+		<UAlignments>None</UAlignments>
+		<!-- Required Alignments -->
+		<Alignments></Alignments>
+		<!-- (X+int mod)*4 at level 1, X+int mod every level thereafter -->
+		<SkillBonus>2</SkillBonus>
+		<!-- update class skills -->
+		<ClassSkills>
+			<Skill>Appraise</Skill>
+			<Skill>Balance</Skill>
+			<Skill>Bluff</Skill>
+			<Skill>Climb</Skill>
+			<Skill>Concentration</Skill>
+			<Skill>Craft</Skill>
+			<Skill>Decipher Script</Skill>
+			<Skill>Diplomacy</Skill>
+			<Skill>Disguise</Skill>
+			<Skill>Escape Artist</Skill>
+			<Skill>Gather Information</Skill>
+			<Skill>Hide</Skill>
+			<Skill>Jump</Skill>
+			<Skill>Knowledge</Skill>
+			<Skill>Listen</Skill>
+			<Skill>Move Silenty</Skill>
+			<Skill>Perform</Skill>
+			<Skill>Profession</Skill>
+			<Skill>Sense Motive</Skill>
+			<Skill>Sleight of Hand</Skill>
+			<Skill>Spellcraft</Skill>
+			<Skill>Swim</Skill>
+			<Skill>Tumble</Skill>
+			<Skill>Use Magic Device</Skill>
+		</ClassSkills>
+		<!-- Save Bonus Progression -->
+		<Fort>Good</Fort>
+		<Ref>Bad</Ref>
+		<Will>Bad</Will>
+		<!-- Can take on the class after you leave it? -->
+		<Returnable reason="alignment">true</Returnable>
+		<!-- Base Attack Bonuses -->
+		<BaseAttack>Best</BaseAttack>
+		<Magic exist="false">
+			<!-- Just whether or not spells are prepared ahead of time -->
+			<Prepared>false</Prepared>
+			<!-- Ability that governs spells -->
+			<SpellAbility>Int</SpellAbility>
+			<!-- Spells by level that the class has -->
+			<Spells>
+			
+			</Spells>
+			<!-- Below is spells per day style things -->
+			<SpellProgression>
+				<SpellsPerDay>
+					<Level1>
+						<!-- Spell1 = level 0 spells -->
+						<Spell0>2</Spell0>
+						<!-- Below regulates max spell level you know, so if you have a Cha mod of +50, you still only get more level 0 spells in this case -->
+						<MaxSpellLevel>0</MaxSpellLevel>
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+
+					</Level14>
+					<Level15>
+
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level19>
+
+					</Level19>
+					<Level20>
+
+					</Level20>
+			</SpellsPerDay>
+				<SpellsKnown>
+					<Level1>
+						<!-- Spell0 = level 0 spells -->
+
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+	
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+	
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+	
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+												
+					</Level14>
+					<Level15>
+	
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level9>
+
+					</Level9>
+					<Level20>
+
+					</Level20>				
+				</SpellsKnown>
+			</SpellProgression>
+		</Magic>
+		<!-- Specials have their own benefits as listed below -->
+		<Special>
+			<BonusFeat>
+				<Level1>
+					<FreeFeat>1</FreeFeat>
+				</Level1>
+				<!-- since -1 is every level, -2 is every even level, -3 is every 3rd level, ect. -->
+				<Level-2>
+					<FreeFeat>1</FreeFeat>
+				</Level-2>
+			</BonusFeat>
+		</Special>
+		<!-- Finish proficiencies later -->
+		<Proficiencies>
+		</Proficiencies>
+	</Job>
+	<Job>
+		<Name>Rogue</Name>
+		<NamePlural>Rogues</NamePlural>
+		<NameAdjective>Rogue</NameAdjective>
+		<HitDie>10</HitDie>
+		<!-- Unallowed Alignments -->
+		<UAlignments>None</UAlignments>
+		<!-- Required Alignments -->
+		<Alignments></Alignments>
+		<!-- (X+int mod)*4 at level 1, X+int mod every level thereafter -->
+		<SkillBonus>2</SkillBonus>
+		<!-- update class skills -->
+		<ClassSkills>
+			<Skill>Appraise</Skill>
+			<Skill>Balance</Skill>
+			<Skill>Bluff</Skill>
+			<Skill>Climb</Skill>
+			<Skill>Concentration</Skill>
+			<Skill>Craft</Skill>
+			<Skill>Decipher Script</Skill>
+			<Skill>Diplomacy</Skill>
+			<Skill>Disguise</Skill>
+			<Skill>Escape Artist</Skill>
+			<Skill>Gather Information</Skill>
+			<Skill>Hide</Skill>
+			<Skill>Jump</Skill>
+			<Skill>Knowledge</Skill>
+			<Skill>Listen</Skill>
+			<Skill>Move Silenty</Skill>
+			<Skill>Perform</Skill>
+			<Skill>Profession</Skill>
+			<Skill>Sense Motive</Skill>
+			<Skill>Sleight of Hand</Skill>
+			<Skill>Spellcraft</Skill>
+			<Skill>Swim</Skill>
+			<Skill>Tumble</Skill>
+			<Skill>Use Magic Device</Skill>
+		</ClassSkills>
+		<!-- Save Bonus Progression -->
+		<Fort>Good</Fort>
+		<Ref>Bad</Ref>
+		<Will>Bad</Will>
+		<!-- Can take on the class after you leave it? -->
+		<Returnable reason="alignment">true</Returnable>
+		<!-- Base Attack Bonuses -->
+		<BaseAttack>Best</BaseAttack>
+		<Magic exist="false">
+			<!-- Just whether or not spells are prepared ahead of time -->
+			<Prepared>false</Prepared>
+			<!-- Ability that governs spells -->
+			<SpellAbility>Int</SpellAbility>
+			<!-- Spells by level that the class has -->
+			<Spells>
+			
+			</Spells>
+			<!-- Below is spells per day style things -->
+			<SpellProgression>
+				<SpellsPerDay>
+					<Level1>
+						<!-- Spell1 = level 0 spells -->
+						<Spell0>2</Spell0>
+						<!-- Below regulates max spell level you know, so if you have a Cha mod of +50, you still only get more level 0 spells in this case -->
+						<MaxSpellLevel>0</MaxSpellLevel>
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+
+					</Level14>
+					<Level15>
+
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level19>
+
+					</Level19>
+					<Level20>
+
+					</Level20>
+			</SpellsPerDay>
+				<SpellsKnown>
+					<Level1>
+						<!-- Spell0 = level 0 spells -->
+
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+	
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+	
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+	
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+												
+					</Level14>
+					<Level15>
+	
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level9>
+
+					</Level9>
+					<Level20>
+
+					</Level20>				
+				</SpellsKnown>
+			</SpellProgression>
+		</Magic>
+		<!-- Specials have their own benefits as listed below -->
+		<Special>
+			<BonusFeat>
+				<Level1>
+					<FreeFeat>1</FreeFeat>
+				</Level1>
+				<!-- since -1 is every level, -2 is every even level, -3 is every 3rd level, ect. -->
+				<Level-2>
+					<FreeFeat>1</FreeFeat>
+				</Level-2>
+			</BonusFeat>
+		</Special>
+		<!-- Finish proficiencies later -->
+		<Proficiencies>
+		</Proficiencies>
+	</Job>
+	<Job>
+		<Name>Sorcerer</Name>
+		<NamePlural>Sorcerers</NamePlural>
+		<NameAdjective>Sorcerer</NameAdjective>
+		<HitDie>4</HitDie>
+		<!-- Unallowed Alignments -->
+		<UAlignments>None</UAlignments>
+		<!-- Required Alignments -->
+		<Alignments></Alignments>
+		<!-- (X+int mod)*4 at level 1, X+int mod every level thereafter -->
+		<SkillBonus>2</SkillBonus>
+		<!-- update class skills -->
+		<ClassSkills>
+			<Skill>Appraise</Skill>
+			<Skill>Balance</Skill>
+			<Skill>Bluff</Skill>
+			<Skill>Climb</Skill>
+			<Skill>Concentration</Skill>
+			<Skill>Craft</Skill>
+			<Skill>Decipher Script</Skill>
+			<Skill>Diplomacy</Skill>
+			<Skill>Disguise</Skill>
+			<Skill>Escape Artist</Skill>
+			<Skill>Gather Information</Skill>
+			<Skill>Hide</Skill>
+			<Skill>Jump</Skill>
+			<Skill>Knowledge</Skill>
+			<Skill>Listen</Skill>
+			<Skill>Move Silenty</Skill>
+			<Skill>Perform</Skill>
+			<Skill>Profession</Skill>
+			<Skill>Sense Motive</Skill>
+			<Skill>Sleight of Hand</Skill>
+			<Skill>Spellcraft</Skill>
+			<Skill>Swim</Skill>
+			<Skill>Tumble</Skill>
+			<Skill>Use Magic Device</Skill>
+		</ClassSkills>
+		<!-- Save Bonus Progression -->
+		<Fort>Good</Fort>
+		<Ref>Bad</Ref>
+		<Will>Bad</Will>
+		<!-- Can take on the class after you leave it? -->
+		<Returnable reason="alignment">true</Returnable>
+		<!-- Base Attack Bonuses -->
+		<BaseAttack>Best</BaseAttack>
+		<Magic exist="false">
+			<!-- Just whether or not spells are prepared ahead of time -->
+			<Prepared>false</Prepared>
+			<!-- Ability that governs spells -->
+			<SpellAbility>Int</SpellAbility>
+			<!-- Spells by level that the class has -->
+			<Spells>
+			
+			</Spells>
+			<!-- Below is spells per day style things -->
+			<SpellProgression>
+				<SpellsPerDay>
+					<Level1>
+						<!-- Spell1 = level 0 spells -->
+						<Spell0>2</Spell0>
+						<!-- Below regulates max spell level you know, so if you have a Cha mod of +50, you still only get more level 0 spells in this case -->
+						<MaxSpellLevel>0</MaxSpellLevel>
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+
+					</Level14>
+					<Level15>
+
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level19>
+
+					</Level19>
+					<Level20>
+
+					</Level20>
+			</SpellsPerDay>
+				<SpellsKnown>
+					<Level1>
+						<!-- Spell0 = level 0 spells -->
+
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+	
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+	
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+	
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+												
+					</Level14>
+					<Level15>
+	
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level9>
+
+					</Level9>
+					<Level20>
+
+					</Level20>				
+				</SpellsKnown>
+			</SpellProgression>
+		</Magic>
+		<!-- Specials have their own benefits as listed below -->
+		<Special>
+			<BonusFeat>
+				<Level1>
+					<FreeFeat>1</FreeFeat>
+				</Level1>
+				<!-- since -1 is every level, -2 is every even level, -3 is every 3rd level, ect. -->
+				<Level-2>
+					<FreeFeat>1</FreeFeat>
+				</Level-2>
+			</BonusFeat>
+		</Special>
+		<!-- Finish proficiencies later -->
+		<Proficiencies>
+		</Proficiencies>
+	</Job>
+	<Job>
+		<Name>Wizard</Name>
+		<NamePlural>Wizards</NamePlural>
+		<NameAdjective>Wizard</NameAdjective>
+		<HitDie>4</HitDie>
+		<!-- Unallowed Alignments -->
+		<UAlignments>None</UAlignments>
+		<!-- Required Alignments -->
+		<Alignments>None</Alignments>
+		<!-- (X+int mod)*4 at level 1, X+int mod every level thereafter -->
+		<SkillBonus>2</SkillBonus>
+		<!-- update class skills -->
+		<ClassSkills>
+			<Skill>Concentration</Skill>
+			<Skill>Craft</Skill>
+			<Skill>Decipher Script</Skill>
+			<Skill>Knowledge</Skill>
+			<Skill>Spellcraft</Skill>
+		</ClassSkills>
+		<!-- Save Bonus Progression -->
+		<Fort>Bad</Fort>
+		<Ref>Bad</Ref>
+		<Will>Good</Will>
+		<!-- Can take on the class after you leave it? -->
+		<Returnable reason="alignment">true</Returnable>
+		<!-- Base Attack Bonuses -->
+		<BaseAttack>Bad</BaseAttack>
+		<Magic exist="true">
+			<!-- Just whether or not spells are prepared ahead of time -->
+			<Prepared>true</Prepared>
+			<!-- Ability that governs spells -->
+			<SpellAbility>Int</SpellAbility>
+			<!-- Spells by level that the class has -->
+			<Spells>
+			
+			</Spells>
+			<!-- Below is spells per day style things -->
+			<SpellProgression>
+				<SpellsPerDay>
+					<Level1>
+						<!-- Spell1 = level 0 spells -->
+						<Spell0>2</Spell0>
+						<!-- Below regulates max spell level you know, so if you have a Cha mod of +50, you still only get more level 0 spells in this case -->
+						<MaxSpellLevel>0</MaxSpellLevel>
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+
+					</Level14>
+					<Level15>
+
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level19>
+
+					</Level19>
+					<Level20>
+
+					</Level20>
+			</SpellsPerDay>
+				<SpellsKnown>
+					<Level1>
+						<!-- Spell0 = level 0 spells -->
+
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+	
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+	
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+	
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+												
+					</Level14>
+					<Level15>
+	
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level9>
+
+					</Level9>
+					<Level20>
+
+					</Level20>				
+				</SpellsKnown>
+			</SpellProgression>
+		</Magic>
+		<!-- Specials have their own benefits as listed below -->
+		<Special>
+			<BonusFeat>
+				<Level1>
+					<FreeFeat>1</FreeFeat>
+				</Level1>
+				<!-- since -1 is every level, -2 is every even level, -3 is every 3rd level, ect. -->
+				<Level-2>
+					<FreeFeat>1</FreeFeat>
+				</Level-2>
+			</BonusFeat>
+		</Special>
+		<!-- Finish proficiencies later -->
+		<Proficiencies>
+		</Proficiencies>
+	</Job>
+</Classes>
+
+<!--
+LVL1-20 PROGRESSION
+
+				<Level1>
+					<Spell0>4</Spell0>
+				</Level1>
+				<Level2>
+					<Spell0>5</Spell0>
+					
+				</Level2>
+				<Level3>
+					<Spell0>6</Spell0>
+				</Level3>
+				<Level4>
+
+				</Level4>
+				<Level5>
+
+				</Level5>
+				<Level6>
+
+				</Level6>
+				<Level7>
+
+				</Level7>
+				<Level8>
+
+				</Level8>
+				<Level9>
+
+				</Level9>
+				<Level10>
+
+				</Level10>
+				<Level11>
+
+				</Level11>
+				<Level12>
+
+				</Level12>
+				<Level13>
+					
+				</Level13>
+				<Level14>
+
+				</Level14>
+				<Level15>
+
+				</Level15>
+				<Level16>
+					
+				</Level16>
+				<Level17>
+
+				</Level17>
+				<Level18>
+
+				</Level18>
+				<Level9>
+
+				</Level9>
+				<Level20>
+
+				</Level20>	
+
+-->
+
+<!-- Below is template for a new class -->
+<!--
+	<Job>
+		<Name>Bard</Name>
+		<NamePlural>Bards</NamePlural>
+		<NameAdjective>Bardic</NameAdjective>
+		<HitDie>6</HitDie>
+		<!- Unallowed Alignments -
+		<UAlignments>Lawful</Alignments>
+		<!- Required Alignments 
+		<Alignments></Alignments>
+		<!- (X+int mod)*4 at level 1, X+int mod every level thereafter 
+		<SkillBonus>6</SkillBonus>
+		<ClassSkills>
+			<Skill>Appraise</Skill>
+			<Skill>Balance</Skill>
+			<Skill>Bluff</Skill>
+			<Skill>Climb</Skill>
+			<Skill>Concentration</Skill>
+			<Skill>Craft</Skill>
+			<Skill>Decipher Script</Skill>
+			<Skill>Diplomacy</Skill>
+			<Skill>Disguise</Skill>
+			<Skill>Escape Artist</Skill>
+			<Skill>Gather Information</Skill>
+			<Skill>Hide</Skill>
+			<Skill>Jump</Skill>
+			<Skill>Knowledge</Skill>
+			<Skill>Listen</Skill>
+			<Skill>Move Silenty</Skill>
+			<Skill>Perform</Skill>
+			<Skill>Profession</Skill>
+			<Skill>Sense Motive</Skill>
+			<Skill>Sleight of Hand</Skill>
+			<Skill>Spellcraft</Skill>
+			<Skill>Swim</Skill>
+			<Skill>Tumble</Skill>
+			<Skill>Use Magic Device</Skill>
+		</ClassSkills>
+		<!- Save Bonus Progression -
+		<Fort>Bad</Fort>
+		<Ref>Good</Ref>
+		<Will>Good</Will>
+		<!- Can take on the class after you leave it? -
+		<Returnable reason="alignment">false</Returnable>
+		<!- Base Attack Bonuses -
+		<BaseAttack>Good</BaseAttack>
+		<Magic exist="true">
+			<!- Just whether or not spells are prepared ahead of time -
+			<Prepared>false</Prepared>
+			<!- Ability that governs spells -
+			<SpellAbility>Int</SpellAbility>
+			<!- Spells by level that the class has -
+			<Spells>
+			
+			</Spells>
+			<!- Below is spells per day style things -
+			<SpellProgression>
+				<SpellsPerDay>
+					<Level1>
+						<!- Spell1 = level 0 spells -
+						<Spell0>2</Spell0>
+						<!- Below regulates max spell level you know, so if you have a Cha mod of +50, you still only get more level 0 spells in this case -
+						<MaxSpellLevel>0</MaxSpellLevel>
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+
+					</Level14>
+					<Level15>
+
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level19>
+
+					</Level19>
+					<Level20>
+
+					</Level20>
+			</SpellsPerDay>
+				<SpellsKnown>
+					<Level1>
+						<!- Spell0 = level 0 spells
+
+					</Level1>
+					<Level2>
+
+					</Level2>
+					<Level3>
+
+					</Level3>
+					<Level4>
+
+					</Level4>
+					<Level5>
+
+					</Level5>
+					<Level6>
+	
+					</Level6>
+					<Level7>
+
+					</Level7>
+					<Level8>
+
+					</Level8>
+					<Level9>
+	
+					</Level9>
+					<Level10>
+
+					</Level10>
+					<Level11>
+
+					</Level11>
+					<Level12>
+	
+					</Level12>
+					<Level13>
+
+					</Level13>
+					<Level14>
+												
+					</Level14>
+					<Level15>
+	
+					</Level15>
+					<Level16>
+
+					</Level16>
+					<Level17>
+
+					</Level17>
+					<Level18>
+
+					</Level18>
+					<Level9>
+
+					</Level9>
+					<Level20>
+
+					</Level20>				
+				</SpellsKnown>
+			</SpellProgression>
+		</Magic>
+		<!- Specials have their own benefits as listed below 
+		<Special>
+		</Special>
+		<Proficiencies>
+		</Proficiencies>
+	</Job>
+ -->

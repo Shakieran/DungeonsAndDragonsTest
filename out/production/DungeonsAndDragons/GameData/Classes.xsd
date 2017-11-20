@@ -1,0 +1,909 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://kieranedraney.com/DDgame/General" xmlns="http://kieranedraney.com/DDgame/General">
+<!-- 6/14/2017 I am documenting the hwole of my code in hopes of making it understandable to any individual wishing to use it -->
+  <xs:attributeGroup name="LevelAdditions">
+    <xs:attribute name="LevelMult" type="xs:boolean" default="false"/>
+    <xs:attribute name="LevelAddi" type="xs:boolean" default="false"/>
+    <xs:attribute name="LevelSubt" type="xs:boolean" default="false"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="levelOccurs">
+    <xs:attribute name="level" type="xs:nonNegativeInteger" default="1"/>
+    <!-- level is just level, 1, 2, 3, ect. -> reoccurance is -1 for everylevel, -2 for every even and so forth, 0 is for when it's irrelevant -->
+    <xs:attribute name="reoccurance" type="xs:nonPositiveInteger" default="0"/>
+  </xs:attributeGroup>
+  
+  <!-- The conditions group is used to add/remove conditions for specials and abilities -->
+  <xs:group name="Conditions">
+    <xs:sequence>
+      <!-- Conditions will just add conditions(i.e. light means only in light, drunk is while drunk, ect.) -->
+      <xs:element name="Condition" type="xs:string" maxOccurs="unbounded"  minOccurs="0"/>
+      <!-- XCondition will remove the condition previously placed -->
+      <xs:element name="XCondition" type="xs:string" maxOccurs="unbounded"  minOccurs="0"/>
+    </xs:sequence>
+  </xs:group>
+
+  <!-- Benefits are where every possible benefit that occurs(either during the use or always through a passive special) -->
+  <xs:group name="Benefits">
+    <xs:sequence>
+      <!-- Benefits could be called effects, since it's positive and negatives that occur DURING it's use -->
+      <xs:element name="SkillBuff" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="Skill" maxOccurs="unbounded" minOccurs="0">
+              <xs:complexType mixed="true">
+                <xs:sequence>
+                  <!-- Name is the skill that is buffed, buff is the range, and versus is if it's only versus one particular group-->
+                  <xs:element name="Name" type="xs:string" />
+                  <xs:element name="Buff" type="xs:int" />
+                  <!-- There are at least 3 elements in the Skill element, so each beyond that is another versus -->
+                  <xs:element name="Versus" default="All" maxOccurs="unbounded" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SkillRestricted" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <!-- Putting a skill in here will restrict it(forever is a special, for the duration if an ability) -->
+            <xs:element name="Skill" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="SkillType" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Type" type="xs:string"/>
+                  <xs:element name="Exception" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- The T stands for temporary -->
+      <xs:element name="THP" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TDex" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+              <xs:attribute name="AC" type="xs:boolean" default="true"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TStr" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+              <xs:attribute name="CarryCapacity" type="xs:boolean" default="true"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TCon" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+              <xs:attribute name="HP" type="xs:boolean" default="true"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TInt" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TWis" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TCha" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <!-- TAC is just 1 for now, could need mroe but cross that bridge if it comes to that -->
+      <xs:element name="TAC" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="Bonus" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType mixed="true">
+                <xs:sequence>
+                  <xs:element name="AC" type="xs:int" default="0"/>
+                  <xs:element name="Versus" type="xs:string" maxOccurs="unbounded" minOccurs="1" default="all"/>
+                  <xs:element name="Type" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Spells" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <!-- spell -->
+            <xs:element name="Spell" maxOccurs="unbounded" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="SpellName" type="xs:string"/>
+                  <xs:element name="ApplyClassLevel" type="xs:boolean" default="true"/>
+                  <xs:element name="AbilityMod" default="Int">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="None"/>
+                        <xs:enumeration value="Dex"/>
+                        <xs:enumeration value="Str"/>
+                        <xs:enumeration value="Con"/>
+                        <xs:enumeration value="Int"/>
+                        <xs:enumeration value="Wis"/>
+                        <xs:enumeration value="Con"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="DCBonus" type="xs:int" default="0"/>
+                  <!-- Below is just whether or not the spell targets self -->
+                  <xs:element name="SelfTarget" type="xs:boolean" default="true"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TFort" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="Bonus" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType mixed="true">
+                <xs:sequence>
+                  <xs:element name="Fort" type="xs:int" default="0"/>
+                  <xs:element name="Versus" type="xs:string" maxOccurs="unbounded" minOccurs="1" default="all"/>
+                  <xs:element name="Type" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TRef" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="Bonus" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType mixed="true">
+                <xs:sequence>
+                  <xs:element name="Ref" type="xs:int" default="0"/>
+                  <xs:element name="Versus" type="xs:string" maxOccurs="unbounded" minOccurs="1" default="all"/>
+                  <xs:element name="Type" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TWill" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="Bonus" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType mixed="true">
+                <xs:sequence>
+                  <xs:element name="Will" type="xs:int" default="0"/>
+                  <xs:element name="Versus" type="xs:string" maxOccurs="unbounded" minOccurs="1" default="all"/>
+                  <xs:element name="Type" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CarryCapacity" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Speed" type="xs:int" default="0" minOccurs="0"/>
+      <!-- The string type effectors are default null, so are therefore ignored -->
+      <xs:element name="TBaseAttack" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="Bonus" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType mixed="true">
+                <xs:sequence>
+                  <xs:element name="BaseAttack" type="xs:int" default="0"/>
+                  <xs:element name="Versus" type="xs:string" maxOccurs="unbounded" minOccurs="1" default="all"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TFeat" type="xs:string" default="" minOccurs="0"/>
+      <xs:element name="ActionRestrictions" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Action" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+
+  <!-- Benefit region is unique for special since 1.) it's intended as permanent, 2.) spells are by default targeting the player and 3.) I want to reserve the right to change one not the other -->
+  <xs:group name="BenefitsSpecial">
+    <xs:sequence>
+      <!-- Benefits could be called effects, since it's positive and negatives that occur DURING it's use -->
+      <xs:element name="SkillBuff" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="Skill" maxOccurs="unbounded" minOccurs="0">
+              <xs:complexType mixed="true">
+                <xs:sequence>
+                  <!-- Name is the skill that is buffed, buff is the range, and versus is if it's only versus one particular group-->
+                  <xs:element name="Name" type="xs:string" />
+                  <xs:element name="Buff" type="xs:int" />
+                  <!-- There are at least 3 elements in the Skill element, so each beyond that is another versus -->
+                  <xs:element name="Versus" default="All" maxOccurs="unbounded" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SkillRestricted" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <!-- Putting a skill in here will restrict it(forever is a special, for the duration if an ability) -->
+            <xs:element name="Skill" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="SkillType" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Type" type="xs:string"/>
+                  <xs:element name="Exception" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- The P stands for permanent -->
+      <xs:element name="PHP" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PDex" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PStr" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PCon" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PInt" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PWis" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PCha" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <!-- PAC is just 1 for now, could need mroe but cross that bridge if it comes to that -->
+      <xs:element name="PAC" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="Bonus" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType mixed="true">
+                <xs:sequence>
+                  <xs:element name="AC" type="xs:int" default="0"/>
+                  <xs:element name="Versus" type="xs:string" maxOccurs="unbounded" minOccurs="1" default="all"/>
+                  <xs:element name="Type" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Spells" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <!-- spell -->
+            <xs:element name="Spell" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PFort" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="Bonus" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType mixed="true">
+                <xs:sequence>
+                  <xs:element name="Fort" type="xs:int" default="0"/>
+                  <xs:element name="Versus" type="xs:string" maxOccurs="unbounded" minOccurs="1" default="all"/>
+                  <xs:element name="Type" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PRef" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="Bonus" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType mixed="true">
+                <xs:sequence>
+                  <xs:element name="Ref" type="xs:int" default="0"/>
+                  <xs:element name="Versus" type="xs:string" maxOccurs="unbounded" minOccurs="1" default="all"/>
+                  <xs:element name="Type" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PWill" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="Bonus" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType mixed="true">
+                <xs:sequence>
+                  <xs:element name="Will" type="xs:int" default="0"/>
+                  <xs:element name="Versus" type="xs:string" maxOccurs="unbounded" minOccurs="1" default="all"/>
+                  <xs:element name="Type" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CarryCapacity" default="0" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Speed" type="xs:int" default="0" minOccurs="0"/>
+      <!-- The string type effectors are default null, so are therefore ignored -->
+      <xs:element name="PBaseAttack" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="BaseAttack" type="xs:int" default="0"/>
+            <xs:element name="Versus" type="xs:string" maxOccurs="unbounded" minOccurs="1" default="all"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PFeat" type="xs:string" default="" minOccurs="0"/>
+      <xs:element name="ActionRestrictions" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Action" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  
+  <xs:group name="Post">
+    <xs:sequence>
+      <xs:element name="Duration" type="xs:int" default="0" minOccurs="0"/>
+      <xs:element name="Exhaustion" default="None" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="None"/>
+            <xs:enumeration value="Fatigued"/>
+            <xs:enumeration value="Exhaustion"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="THP" type="xs:int" default="0" minOccurs="0"/>
+      <xs:element name="TAC" type="xs:int" default="0" minOccurs="0"/>
+      <xs:element name="TFort" type="xs:int" default="0" minOccurs="0"/>
+      <xs:element name="TRef" type="xs:int" default="0" minOccurs="0"/>
+      <xs:element name="TWill" type="xs:int" default="0" minOccurs="0"/>
+      <xs:element name="CarryCapacity" type="xs:int" default="0" minOccurs="0"/>
+      <xs:element name="Speed" type="xs:int" default="0" minOccurs="0"/>
+      <xs:element name="BaseAttack" type="xs:int" default="0" minOccurs="0"/>
+      <xs:element name="AbilityModifiers" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="TDex" type="xs:int" default="0"/>
+            <xs:element name="TStr" type="xs:int" default="0"/>
+            <xs:element name="TCon" type="xs:int" default="0"/>
+            <xs:element name="TInt" type="xs:int" default="0"/>
+            <xs:element name="TWis" type="xs:int" default="0"/>
+            <xs:element name="TCha" type="xs:int" default="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Spells" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="Spell" type="xs:string" default="None" maxOccurs="unbounded" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TFeats" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="TFeat" type="xs:string" default="None" maxOccurs="unbounded" minOccurs="0"/>
+            <!--Remove the feat with XFeat-->
+            <xs:element name="XFeat" type="xs:string" default="None" maxOccurs="unbounded" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="AbilityLevels">
+    <xs:sequence>
+      <xs:element name="Name" type="xs:string" minOccurs="0"/>
+      <xs:element name="BriefDescription" type="xs:string" minOccurs="0"/>
+      <xs:element name="LongDescription" type="xs:string" minOccurs="0"/>
+      <xs:element name="ActionType" minOccurs="0" default="Standard">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Free"/>
+            <xs:enumeration value="Move"/>
+            <xs:enumeration value="Standard"/>
+            <xs:enumeration value="Full"/>
+            <xs:enumeration value="Swift"/>
+            <xs:enumeration value="Immediate"/>
+            <xs:enumeration value="NotAnAction"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="AttacksOfOpportunity" type="xs:boolean" default="false" minOccurs="0"/>
+      <xs:element name="Duration" type="xs:int" minOccurs="0"/>
+      <!--The durationMOd is the ability whose modifier is added to the duration-->
+      <xs:element name="DurationMod" minOccurs="0" default="None">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Dex"/>
+            <xs:enumeration value="Str"/>
+            <xs:enumeration value="Con"/>
+            <xs:enumeration value="Int"/>
+            <xs:enumeration value="Wis"/>
+            <xs:enumeration value="Cha"/>
+            <xs:enumeration value="None"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Uses" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int">
+              <xs:attributeGroup ref="LevelAdditions"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Increment" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Day"/>
+            <xs:enumeration value="2Day"/>
+            <xs:enumeration value="3Day"/>
+            <xs:enumeration value="4Day"/>
+            <xs:enumeration value="Hour"/>
+            <xs:enumeration value="Week"/>
+            <xs:enumeration value="Eternity"/>
+            <xs:enumeration value="Encounter"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <!-- Does it stack with itself? -->
+      <xs:element name="Stacks" type="xs:boolean" default="false" minOccurs="0"/>
+      <!-- Can it be used in response to someone else? -->
+      <xs:element name="InResponse" type="xs:boolean" default="false" minOccurs="0"/>
+      <xs:element name="Conditions" maxOccurs="1" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:group ref="Conditions"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Benefits" maxOccurs="1" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:group ref="Benefits"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Post" maxOccurs="1" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:group ref="Post"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="SpecialLevels">
+    <xs:sequence>
+      <xs:element name="Name" type="xs:string" minOccurs="0"/>
+      <xs:element name="BriefDescription" type="xs:string" minOccurs="0"/>
+      <xs:element name="LongDescription" type="xs:string" minOccurs="0"/>
+      <xs:element name="Stacks" type="xs:boolean" default="false" minOccurs="0"/>
+      <xs:element name="Conditions" maxOccurs="1" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:group ref="Conditions"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Benefits" maxOccurs="1" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:group ref="BenefitsSpecial"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Post" maxOccurs="1" minOccurs="0">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:group ref="Post"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:element name="Classes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="Job">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Name" type="xs:string" />
+              <xs:element name="NamePlural" type="xs:string" />
+              <xs:element name="NameAdjective" type="xs:string" />
+              <xs:element name="ShortDesc" type="xs:string" />
+              <xs:element name="LongDesc" type="xs:string" />
+              <xs:element name="FullDesc" type="xs:string" />
+              <xs:element name="HitDie" type="xs:int" />
+              <!-- UAlignments are alignments that are not allowed - Alignments are alignments that are required -->
+              <xs:element name="UAlignments" default="None">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="None"/>
+                    <xs:enumeration value="Lawful"/>
+                    <xs:enumeration value="Neutral"/>
+                    <xs:enumeration value="Chaotic"/>
+                    <xs:enumeration value="Good"/>
+                    <!-- Neutral -->
+                    <xs:enumeration value="Evil"/>
+                    <xs:enumeration value="Good Lawful"/>
+                    <xs:enumeration value="Good Neutral"/>
+                    <xs:enumeration value="Good Chaotic"/>
+                    <xs:enumeration value="Neutral Lawful"/>
+                    <xs:enumeration value="Neutral Neutral"/>
+                    <xs:enumeration value="Neutral Chaotic"/>
+                    <xs:enumeration value="Evil Lawful"/>
+                    <xs:enumeration value="Evil Neutral"/>
+                    <xs:enumeration value="Evil Chaotic"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Alignments" default="None">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="None"/>
+                    <xs:enumeration value="Lawful"/>
+                    <xs:enumeration value="Neutral"/>
+                    <xs:enumeration value="Chaotic"/>
+                    <xs:enumeration value="Good"/>
+                    <!-- Neutral -->
+                    <xs:enumeration value="Evil"/>
+                    <xs:enumeration value="Good Lawful"/>
+                    <xs:enumeration value="Good Neutral"/>
+                    <xs:enumeration value="Good Chaotic"/>
+                    <xs:enumeration value="Neutral Lawful"/>
+                    <xs:enumeration value="Neutral Neutral"/>
+                    <xs:enumeration value="Neutral Chaotic"/>
+                    <xs:enumeration value="Evil Lawful"/>
+                    <xs:enumeration value="Evil Neutral"/>
+                    <xs:enumeration value="Evil Chaotic"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <!-- Skill bonus is the (SkillBonus + int mod) * 4 at level 1 skill points -->
+              <xs:element name="SkillBonus" type="xs:int" />
+              <xs:element name="ClassSkills">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="Skill" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Fort">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="Good"/>
+                    <xs:enumeration value="Bad"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Ref">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="Good"/>
+                    <xs:enumeration value="Bad"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Will">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="Good"/>
+                    <xs:enumeration value="Bad"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <!-- returnable is simply if a player can level in another class and then come back - reason can give specifics on why they left, for example their alignment changed -->
+              <xs:element name="Returnable">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:boolean">
+                      <xs:attribute name="reason" type="xs:string" default="OtherClass" />
+                      <!-- if reason is "Any" then you can't not leave the class for any reason and then return -->
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="BaseAttack" default="Good">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="Best"/>
+                    <xs:enumeration value="Good"/>
+                    <xs:enumeration value="Poor"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Magic">
+                <xs:complexType>
+                  <xs:sequence minOccurs="0">
+                    <xs:element name="Prepared" type="xs:boolean" />
+                    <xs:element name="SpellType" default="Arcane">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="Arcane"/>
+                          <xs:enumeration value="Divine"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="SpellAbility" default="Int">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="None"/>
+                          <xs:enumeration value="Dex"/>
+                          <xs:enumeration value="Str"/>
+                          <xs:enumeration value="Con"/>
+                          <xs:enumeration value="Int"/>
+                          <xs:enumeration value="Wis"/>
+                          <xs:enumeration value="Cha"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Spells">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Level" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType mixed="true">
+                              <xs:sequence>
+                                <xs:element maxOccurs="unbounded" name="Spell" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                              <xs:attributeGroup ref="levelOccurs"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="SpellProgression">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="SpellsPerDay">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Level" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType mixed="true">
+                                    <xs:sequence minOccurs="0">
+                                      <xs:element name="Spell0" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell1" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell2" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell3" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell4" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell5" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell6" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell7" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell8" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell9" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="MaxSpellLevel" minOccurs="0">
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:int">
+                                            <xs:minInclusive value="0"/>
+                                            <xs:maxInclusive value="9"/>
+                                          </xs:restriction>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attributeGroup ref="levelOccurs"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="SpellsKnown">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Level">
+                                  <xs:complexType mixed="true">
+                                    <xs:sequence minOccurs="0">
+                                      <xs:element name="Spell0" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell1" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell2" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell3" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell4" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell5" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell6" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell7" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell8" type="xs:nonNegativeInteger" minOccurs="0" />
+                                      <xs:element name="Spell9" type="xs:nonNegativeInteger" minOccurs="0" />
+                                    </xs:sequence>
+                                    <xs:attributeGroup ref="levelOccurs"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="exist" type="xs:boolean" default="false" />
+                </xs:complexType>
+              </xs:element>
+              <!-- ABILITIES ARE BEING WORKED ON - THEN REWORK SPECIALS -->
+              <xs:element name="Specials" minOccurs="1">
+                <xs:complexType mixed="true">
+                  <xs:sequence>
+                    <xs:element name="Special" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType mixed="true">
+                        <xs:sequence>
+                          <xs:element name="Level" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:group ref="SpecialLevels"/>
+                              </xs:sequence>
+                              <xs:attributeGroup ref="levelOccurs"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <!-- Specials are passive, abilities are activated -->
+              <xs:element name="Abilities" minOccurs="1">
+                <xs:complexType mixed="true">
+                  <xs:sequence>
+                    <xs:element name="Ability" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType mixed="true">
+                        <xs:sequence>
+                          <xs:element name="Level" maxOccurs="unbounded">
+                            <xs:complexType mixed="true">
+                              <xs:sequence>
+                                <xs:group ref="AbilityLevels"/>
+                              </xs:sequence>
+                              <xs:attributeGroup ref="levelOccurs"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Proficiencies">
+                <xs:complexType mixed="true">
+                  <xs:sequence minOccurs="0">
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="Proficiency" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
+<!--
+                  <xs:element name="" default="None">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="None"/>
+                        <xs:enumeration value="Dex"/>
+                        <xs:enumeration value="Str"/>
+                        <xs:enumeration value="Con"/>
+                        <xs:enumeration value="Int"/>
+                        <xs:enumeration value="Wis"/>
+                        <xs:enumeration value="Con"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+-->
