@@ -1,6 +1,9 @@
 package com.kedraney.ddgame.mapgeneration;
 
 import java.math.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.*;
 
 public class MapCreationManager
@@ -11,6 +14,7 @@ public class MapCreationManager
 	private static MapForestBuilder mapForestBuilder;//creates the forest distribution
 //	private static MapRivers mapRiverCrafter;//crafts the rivers of the map
 	private static RaceTraitCalculator raceTraitCalculator;//calculates trait maps
+	private static TraitManager traitManager;//essentially is the creator of political boundaries and what not
 	private static int size;
 	
 	private static int[][][] mapAttributes;
@@ -23,7 +27,43 @@ public class MapCreationManager
 		mapAttributes[0] = mapMaker.getMap();
 		heightProfiler = new MapAltitudeGen(mapAttributes[0], 1.1);//Use a slider with .1 increments ranged from 0.0-2.0
 		mapAttributes[1] = heightProfiler.getMap();//               1.1 default
-		
+
+		//-----------------------------------
+		//
+		//--------------------------------
+		//below section forms a connection to the database so we can manipulate it
+		Connection gameData = null;
+		try
+		{
+			String url = "jdbc:sqlite:C:\\Users\\Kieran Edraney\\Desktop\\DungeonsAndDragons\\src\\GameData\\database\\GameData.db";
+
+			gameData = DriverManager.getConnection(url);
+
+			System.out.println("Connection is made bro!");
+		}
+		catch(SQLException e)
+		{
+			System.out.println(e.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				if (gameData != null)
+				{
+					gameData.close();
+				}
+			}
+			catch (SQLException ex)
+			{
+				System.out.println(ex.getMessage());
+			}
+		}
+
+		//-------------------------------------------------
+		//above is setting up the connection to the database
+		//---------------------------------------------
+
 		for(int y = 0; y < size; y++)//This section just makes sure the two maps are the same
 		{
 			for(int x = 0; x < size; x++)
@@ -64,11 +104,11 @@ public class MapCreationManager
 			{
 				for(int x = 0; x < size; x++)
 				{
-					System.out.print(mapAttributes[i][y][x] + " ");
+//					System.out.print(mapAttributes[i][y][x] + " ");
 				}
-				System.out.println();
+//				System.out.println();
 			}
-			System.out.println("\n-----------------------MAP_UP--" + i + "--------------------------------\n");
+//			System.out.println("\n-----------------------MAP_UP--" + i + "--------------------------------\n");
 		}
 /*
 		mapRiverCrafter = new MapRivers(mapAttributes[0], mapAttributes[1], .1, 0.0, .02);
