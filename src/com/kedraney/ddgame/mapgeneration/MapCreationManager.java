@@ -60,6 +60,8 @@ public class MapCreationManager
 			}
 		}
 
+		//we want to get the applicable races given the location we have and all that jazz
+
 		//-------------------------------------------------
 		//above is setting up the connection to the database
 		//---------------------------------------------
