@@ -1,0 +1,255 @@
+{
+    "type": "database",
+    "name": "GameData",
+    "objects": [
+        {
+            "type": "table",
+            "database": null,
+            "name": "Races",
+            "withoutRowId": true,
+            "ddl": "CREATE TABLE Races (name STRING PRIMARY KEY UNIQUE NOT NULL, dex INT NOT NULL DEFAULT (0), str INT NOT NULL DEFAULT (0), con INT DEFAULT (0) NOT NULL, inte INT DEFAULT (0) NOT NULL, wis INT DEFAULT (0) NOT NULL, chr INT NOT NULL DEFAULT (0), traits STRING NOT NULL, superRace STRING REFERENCES Races (name))",
+            "columns": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "constraints": [
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE "
+                        },
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "dex",
+                    "type": "INT",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "DEFAULT",
+                            "definition": "DEFAULT (0)"
+                        }
+                    ]
+                },
+                {
+                    "name": "str",
+                    "type": "INT",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "DEFAULT",
+                            "definition": "DEFAULT (0)"
+                        }
+                    ]
+                },
+                {
+                    "name": "con",
+                    "type": "INT",
+                    "constraints": [
+                        {
+                            "type": "DEFAULT",
+                            "definition": "DEFAULT (0) "
+                        },
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "inte",
+                    "type": "INT",
+                    "constraints": [
+                        {
+                            "type": "DEFAULT",
+                            "definition": "DEFAULT (0) "
+                        },
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "wis",
+                    "type": "INT",
+                    "constraints": [
+                        {
+                            "type": "DEFAULT",
+                            "definition": "DEFAULT (0) "
+                        },
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "chr",
+                    "type": "INT",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "DEFAULT",
+                            "definition": "DEFAULT (0)"
+                        }
+                    ]
+                },
+                {
+                    "name": "traits",
+                    "type": "STRING",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "superRace",
+                    "type": "STRING",
+                    "constraints": [
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES Races (name)"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+                [
+                    "elf",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    "elf01",
+                    "elf"
+                ],
+                [
+                    "dwarf",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    "dwarf01",
+                    "dwarf"
+                ]
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "Trait",
+            "withoutRowId": true,
+            "ddl": "CREATE TABLE Trait (name STRING PRIMARY KEY UNIQUE NOT NULL, \\"index\\" INT UNIQUE NOT NULL)",
+            "columns": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "constraints": [
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE "
+                        },
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "index",
+                    "type": "INT",
+                    "constraints": [
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE "
+                        },
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+                [
+                    "MountainDweller",
+                    1
+                ],
+                [
+                    "ForestDweller",
+                    0
+                ]
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "TraitCollections",
+            "withoutRowId": true,
+            "ddl": "CREATE TABLE TraitCollections (collectionid STRING NOT NULL, trait STRING REFERENCES Trait (name) NOT NULL)",
+            "columns": [
+                {
+                    "name": "collectionid",
+                    "type": "STRING",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "trait",
+                    "type": "STRING",
+                    "constraints": [
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES Trait (name) "
+                        },
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+                [
+                    "elf01",
+                    "ForestDweller"
+                ],
+                [
+                    "dwarf01",
+                    "MountainDweller"
+                ]
+            ]
+        }
+    ]
+}

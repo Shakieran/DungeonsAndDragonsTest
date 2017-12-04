@@ -5,15 +5,15 @@ import java.util.*;
 
 public class TraitCellHolder
 {
-    HashMap<Integer, Double> weights = new HashMap<>();
+    HashMap<Integer, Double> weights = new HashMap<>();//holds the sum of all trait maps at each cell location
     HashMap<Integer, Integer> valid = new HashMap<>();//0 or null is not good, 1 is valid to use, 2 is already in use
-    ArrayList<Integer> places = new ArrayList<>();
+    ArrayList<Integer> places = new ArrayList<>();//at index 0 is the highest weighted cell, and ect.
+    ArrayList<Integer> lands = new ArrayList<>();//contains all lands that are had by this faction
 //    ArrayList<Integer> usable = new ArrayList<>();
 
     int[] traits;
     int[][] politicalTraits;
     int[][] map;
-
     int size;
 
     public TraitCellHolder(double[][][] map, ArrayList<Integer> traitz, int[][] original_map)
@@ -27,7 +27,7 @@ public class TraitCellHolder
             traits[t] = traitz.get(t);
         }
 
-        updateMaps(map);
+        //updateMaps(map);
 
         for(int y = 0; y < size; y++)
         {
@@ -37,12 +37,14 @@ public class TraitCellHolder
             }
         }
 
+        updateMaps(map);
+
         valid.put(places.get(0), 1);
     }
 
 //sets up the maps so that places maps to a cell ID, and weights takes the ID and returns the weight
     //public so that other classes can send it updated trait maps as stuff happens ect. ect.
-    public void updateMaps(double uppedMapsT[][][])
+    private void updateMaps(double uppedMapsT[][][])
     {
         int place;
         double sum;
@@ -66,7 +68,7 @@ public class TraitCellHolder
 
                     weights.put(MapNode.createID(x, y), sum);
 
-                    while (places.get(place) > sum)
+                    while (places.get(place) < sum)
                     {
                         place++;
                     }
@@ -117,8 +119,57 @@ public class TraitCellHolder
 
             valid.put(places.get(index), 2);
 
+            lands.add(places.get(index));
+
             return places.get(index);
         }
+    }
+
+    public ArrayList<Integer> pop(int num)
+    {
+        ArrayList<Integer> answer = new ArrayList<>();
+        for (int c = 0; c < num; c++)
+        {
+            if (valid.get(places.get(0)) > 1)
+            {
+                c = num + 1;//-1 means that there are no further values of which we can use that are valid
+            }
+            else
+            {
+                int index = 0;
+                int y, x;
+
+                while (valid.get(places.get(index)) != 1)
+                    index++;//essentially if we can't pop it we don't care about it
+
+                y = MapNode.getIDY(places.get(index));
+                x = MapNode.getIDX(places.get(index));
+
+                //these below loops make sure that the nearby nodes are now able to be popped
+                for (int i = -1; i < 2; i += 2)
+                {
+                    for (int z = -1; z < 2; z += 2)
+                    {
+                        if (y + i < size && y + i > -1 && x + z < size && x + z > -1 && valid.get(MapNode.createID(x + z, y + i)) != 2)
+                            valid.put(MapNode.createID(x + z, y + i), 1);
+                    }
+                }
+
+                valid.put(places.get(index), 2);
+
+                answer.add(places.get(index));
+
+                if(c == 0)
+                    System.out.println("Test -- " + answer.get(answer.size()-1));
+            }
+        }
+
+        if(answer.size() < 1)
+            answer.add(-1);
+
+        lands.addAll(answer);
+
+        return answer;
     }
 
     //simply method that just sets all land other factions use as in use
@@ -126,5 +177,10 @@ public class TraitCellHolder
     {
         for(int i = 0; i < others.size(); i++)
             valid.put(others.get(i), 2);
+    }
+
+    public ArrayList<Integer> getLands()
+    {
+        return lands;
     }
 }

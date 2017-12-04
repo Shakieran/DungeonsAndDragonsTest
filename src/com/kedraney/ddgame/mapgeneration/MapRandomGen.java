@@ -6,7 +6,8 @@ import java.util.*;
 public class MapRandomGen
 {
 	//maps is just how many maps CAN be generated
-	private final int maps = 3;//I don't want the flatlands yet
+	private final int maps = 3;
+	private final int mapType;
 	
 	private final int size = 100;
 	private int sum =  4;
@@ -19,6 +20,7 @@ public class MapRandomGen
 	{
 //		int whichMap = (int)(Math.random() * maps)+1;
 		int whichMap = 1;
+		mapType = whichMap;
 		
 		switch(whichMap)
 		{
@@ -35,7 +37,12 @@ public class MapRandomGen
 	}
 	
 	//FLATLANDS METHODS BEGIN
-	
+
+	public int getMapType()
+	{
+		return mapType;
+	}
+
 	private void flatlandsGen()
 	{
 		for(int y = 0; y < size; y++)
