@@ -75,7 +75,7 @@ public class TraitManager
 
         }
 
-        setUpLand();
+        setUpLand(2);
 
         printAllMaps();
     }
@@ -123,6 +123,34 @@ public class TraitManager
                 hold = tMaps[c].pop(stepSize);
 
                 if(hold.get(0) == -1)
+                {
+                    c = tMaps.length;
+                }
+                else
+                {
+                    for(int o = 0; o < tMaps.length; o++)
+                    {
+                        if(o != c)
+                        {
+                            tMaps[o].setForeignLands(hold);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void setUpLand(int x)
+    {
+        int hold = 1;
+
+        while(hold != -1)
+        {
+            for(int c = 0; c < tMaps.length; c++)
+            {
+                hold = tMaps[c].pop();
+
+                if(hold == -1)
                 {
                     c = tMaps.length;
                 }

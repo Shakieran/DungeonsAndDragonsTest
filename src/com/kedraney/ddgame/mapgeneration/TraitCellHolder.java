@@ -15,12 +15,14 @@ public class TraitCellHolder
     int[][] politicalTraits;
     int[][] map;
     int size;
+    double[][][] allTraitMaps;
 
     public TraitCellHolder(double[][][] map, ArrayList<Integer> traitz, int[][] original_map)
     {
         traits = new int[traitz.size()];
         this.map = original_map;
         size = this.map.length;
+        allTraitMaps = map;
 
         for(int t = 0; t < traitz.size(); t++)
         {
@@ -37,15 +39,16 @@ public class TraitCellHolder
             }
         }
 
-        updateMaps(map);
+        updateMaps();
 
         valid.put(places.get(0), 1);
     }
 
 //sets up the maps so that places maps to a cell ID, and weights takes the ID and returns the weight
     //public so that other classes can send it updated trait maps as stuff happens ect. ect.
-    private void updateMaps(double uppedMapsT[][][])
+    private void updateMaps()
     {
+        double[][][] uppedMapsT = allTraitMaps;
         int place;
         double sum;
 
@@ -94,37 +97,50 @@ public class TraitCellHolder
     //returns the next top-most value, and add potential
     public int pop()
     {
-        if(valid.get(places.get(0)) > 1)
+        updateMaps();
+        if (valid.get(places.get(0)) > 1)
         {
-            return -1;//-1 means that there are no further values of which we can use that are valid
+           return -1;
         }
         else
         {
             int index = 0;
-            int y, x;
+            int y, x, i, z;
 
-            while(valid.get(places.get(index)) < 2)
-                index++;//essentially if we can't pop it we don't care about it
-
-            y = MapNode.getIDY(places.get(index));
-            x = MapNode.getIDX(places.get(index));
-
-            //these below loops make sure that the nearby nodes are now able to be popped
-            for(int i = -1; i < 2; i+= 2)
+//                System.out.println(places.size());
+            //index < places.size() && index > -1
+            while (places.get(index) > -1
+                    && valid.get(places.get(index)) != 1)//THIS FUCKING LINE -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             {
-                for(int z = -1; z < 2; z += 2)
-                {
-                    if(y + i < size && y + i > -1 && x + z < size && x + z > -1)
-                        valid.put(MapNode.createID(x + z, y + i), 1);
-                }
+                index++;//essentially if we can't pop it we don't care about it
+//                  System.out.println(index);
             }
 
-            valid.put(places.get(index), 2);
+            if (index < places.size() && index > -1)
+            {
+                y = MapNode.getIDY(places.get(index));
+                x = MapNode.getIDX(places.get(index));
 
-            lands.add(places.get(index));
+                //these below loops make sure that t he nearby nodes are now able to be popped
+                for (int g = 0; g < 4; g++)
+                {
+                    //use sin to go through the squares directly above, below, and to the sides of the one we are changing
+                    z = (int) (Math.cos(Math.PI / 2.0 * g));//2pi/(number at which one full cycle is completed) * theta goes inside the trig function
+                    i = (int) (Math.sin(Math.PI / 2.0 * g));
+                    if (y + i < size && y + i > -1
+                            && x + z < size && x + z > -1
+                            && valid.get(MapNode.createID(x + z, y + i)) != 2)
+                    {
+                        valid.put(MapNode.createID(x + z, y + i), 1);
+                    }
+                }
 
-            return places.get(index);
+                valid.put(places.get(index), 2);
+
+                return places.get(index);
+            }
         }
+        return -1;
     }
 
     public ArrayList<Integer> pop(int num)
@@ -139,32 +155,46 @@ public class TraitCellHolder
             else
             {
                 int index = 0;
-                int y, x;
+                int y, x, i, z;
 
-                while (valid.get(places.get(index)) != 1)
-                    index++;//essentially if we can't pop it we don't care about it
-
-                y = MapNode.getIDY(places.get(index));
-                x = MapNode.getIDX(places.get(index));
-
-                //these below loops make sure that the nearby nodes are now able to be popped
-                for (int i = -1; i < 2; i += 2)
+//                System.out.println(places.size());
+                //index < places.size() && index > -1
+                while (places.get(index) > -1
+                        && valid.get(places.get(index)) != 1)//THIS FUCKING LINE -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 {
-                    for (int z = -1; z < 2; z += 2)
-                    {
-                        if (y + i < size && y + i > -1 && x + z < size && x + z > -1 && valid.get(MapNode.createID(x + z, y + i)) != 2)
-                            valid.put(MapNode.createID(x + z, y + i), 1);
-                    }
+                    index++;//essentially if we can't pop it we don't care about it
+//                  System.out.println(index);
                 }
 
-                valid.put(places.get(index), 2);
+                if (index < places.size() && index > -1)
+                {
+                    y = MapNode.getIDY(places.get(index));
+                    x = MapNode.getIDX(places.get(index));
 
-                answer.add(places.get(index));
+                    //these below loops make sure that t he nearby nodes are now able to be popped
+                    for (int g = 0; g < 4; g++)
+                    {
+                        //use sin to go through the squares directly above, below, and to the sides of the one we are changing
+                        z = (int) (Math.cos(Math.PI / 2.0 * g));//2pi/(number at which one full cycle is completed) * theta goes inside the trig function
+                        i = (int) (Math.sin(Math.PI / 2.0 * g));
+                        if (y + i < size && y + i > -1
+                                && x + z < size && x + z > -1
+                                && valid.get(MapNode.createID(x + z, y + i)) != 2)
+                        {
+                            valid.put(MapNode.createID(x + z, y + i), 1);
+                        }
+                    }
 
-                if(c == 0)
-                    System.out.println("Test -- " + answer.get(answer.size()-1));
+                    valid.put(places.get(index), 2);
+
+                    answer.add(places.get(index));
+                } else
+                {
+                    c = num + 1;
+                }
             }
         }
+
 
         if(answer.size() < 1)
             answer.add(-1);
@@ -177,8 +207,36 @@ public class TraitCellHolder
     //simply method that just sets all land other factions use as in use
     public void setForeignLands(ArrayList<Integer> others)
     {
+        int index;
         for(int i = 0; i < others.size(); i++)
+        {
+            if(valid.get(others.get(i)) == 1)
+            {
+                index = 0;
+                while(places.get(index) > -1 && valid.get(places.get(index)) != 0)
+                    index++;
+
+                valid.put(places.get(index), 1);//replaces the current one that is being taken away so that we can add more
+            }
             valid.put(others.get(i), 2);
+        }
+    }
+
+    public void setForeignLands(int other)
+    {
+        int index;
+        if(valid.get(other) == 1)
+        {
+            index = 0;
+            while(index < size * size - 1 && places.get(index) > -1 && valid.get(places.get(index)) != 0)
+            {
+                index++;
+            }
+
+            valid.put(places.get(index), 1);
+        }
+
+        valid.put(other, 2);
     }
 
     public ArrayList<Integer> getLands()
