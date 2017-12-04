@@ -99,6 +99,9 @@ public class RaceTraitCalculator
 
 					mountainDwellers[y][x] = sum;//Just the number for starters
 				}
+
+				if(mountainDwellers[y][x] < 0)
+					mountainDwellers[y][x] = 0;
 			}
 		}
 
@@ -170,6 +173,9 @@ public class RaceTraitCalculator
 
 					forestDwellers[y][x] = Math.pow(average, 3)/Math.pow(5, 3);
 				}
+
+				if(forestDwellers[y][x] < 0)
+					forestDwellers[y][x] = 0;
 			}
 		}
 	}

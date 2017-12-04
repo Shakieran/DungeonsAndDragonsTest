@@ -51,6 +51,7 @@ public class TraitCellHolder
 
         places = new ArrayList<>();
         places.add(-1);//values are always above this, so all will be above this
+        weights.put(-1, -1.0);
 
         for(int y = 0; y < size; y++)
         {
@@ -61,24 +62,25 @@ public class TraitCellHolder
                     place = 0;
                     sum = 0;
 
-                    for (int i = 0; i < traits.length; i++)
+                    for(int i = 0; i < traits.length; i++)
                     {
                         sum += uppedMapsT[traits[i]][y][x];
                     }
-
+//                    System.out.println(sum + ":(" + x + ", " + y + ")");
+                    //WORKS UP TO HERE
                     weights.put(MapNode.createID(x, y), sum);
 
-                    while (places.get(place) < sum)
+                    while(weights.get(places.get(place)) > sum)
                     {
                         place++;
                     }
 
                     places.add(place, MapNode.createID(x, y));
-                }
+                }//this else is for when the land cell is already in use, i.e. == 2
                 else//if we can't make sure it won't get picked/ect.
                 {
-                    if(places.get(places.size()-1) == -1)
-                        places.remove(-1);
+//                    if(places.get(places.size()-1) == -1)
+//                        places.remove(-1);
 
                     places.add(MapNode.createID(x, y));
                     weights.put(MapNode.createID(x, y), -1.0);
