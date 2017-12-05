@@ -11,8 +11,8 @@ public class MapCreationManager
 	private static MapParser mapParse;//Creates arraylists for each contiguous land mass
 	private static MapForestBuilder mapForestBuilder;//creates the forest distribution
 //	private static MapRivers mapRiverCrafter;//crafts the rivers of the map
-	private static RaceTraitCalculator raceTraitCalculator;//calculates trait maps
-	private static TraitManager traitManager;//essentially is the creator of political boundaries and what not
+//	private static RaceTraitCalculator raceTraitCalculator;//calculates trait maps
+//	private static TraitManager traitManager;//essentially is the creator of political boundaries and what not
 	private static int size;
 	
 	private static int[][][] mapAttributes;
@@ -23,7 +23,7 @@ public class MapCreationManager
 		size = mapMaker.getSize();//              0       1         2       3
 		mapAttributes = new int[4][size][size];//map, altitudes, forests, rivers
 		mapAttributes[0] = mapMaker.getMap();
-		heightProfiler = new MapAltitudeGen(mapAttributes[0], 1.1);//Use a slider with .1 increments ranged from 0.0-2.0
+		heightProfiler = new MapAltitudeGen(mapAttributes[0], 1.5);//Use a slider with .1 increments ranged from 0.0-2.0
 		mapAttributes[1] = heightProfiler.getMap();//               1.1 default
 		int totalRaces = 3;
 
@@ -93,14 +93,14 @@ public class MapCreationManager
 		mapForestBuilder = new MapForestBuilder(.75, mapAttributes[0], mapAttributes[1]);
 		mapAttributes[2] = mapForestBuilder.getForest();
 
-		raceTraitCalculator = new RaceTraitCalculator(mapAttributes);
+//		raceTraitCalculator = new RaceTraitCalculator(mapAttributes);
 
-		double[][][] traitTester = new double[2][size][size];
+//		double[][][] traitTester = new double[2][size][size];
 
-		traitTester[0] = raceTraitCalculator.getMountainDwellers();
-		traitTester[1] = raceTraitCalculator.getForestDwellers();
+//		traitTester[0] = raceTraitCalculator.getMountainDwellers();
+//		traitTester[1] = raceTraitCalculator.getForestDwellers();
 
-		traitManager = new TraitManager(applicableRaces, totalRaces, mapAttributes, traitTester);
+//		traitManager = new TraitManager(applicableRaces, totalRaces, mapAttributes, traitTester);
 
 		try
 		{
@@ -112,7 +112,7 @@ public class MapCreationManager
 			System.out.println("She open");
 		}
 
-		for(int i = 0; i < traitTester.length; i++)
+/*		for(int i = 0; i < traitTester.length; i++)
 		{
 			for(int y = 0; y < size; y++)
 			{
@@ -123,7 +123,7 @@ public class MapCreationManager
 				System.out.println();
 			}
 			System.out.println("--------------------" + "Trait map " + i + "above" + "-------------------");
-		}
+		}*/
 		//                                     -1 for forets
 		for(int i = 0; i < mapAttributes.length-2; i++)
 		{

@@ -85,7 +85,7 @@ public class TraitCellHolder
 //                    if(places.get(places.size()-1) == -1)
 //                        places.remove(-1);
 
-                    places.add(MapNode.createID(x, y));
+                //    places.add(MapNode.createID(x, y));
                     weights.put(MapNode.createID(x, y), -1.0);
                 }
             }
@@ -98,7 +98,8 @@ public class TraitCellHolder
     public int pop()
     {
         updateMaps();
-        if (valid.get(places.get(0)) > 1)
+
+        if (places.size() < 1 || valid.get(places.get(0)) > 1)
         {
            return -1;
         }
@@ -116,7 +117,7 @@ public class TraitCellHolder
 //                  System.out.println(index);
             }
 
-            if (index < places.size() && index > -1)
+            if (index < places.size())
             {
                 y = MapNode.getIDY(places.get(index));
                 x = MapNode.getIDX(places.get(index));
@@ -137,6 +138,7 @@ public class TraitCellHolder
 
                 valid.put(places.get(index), 2);
 
+                lands.add(places.get(index));
                 return places.get(index);
             }
         }
@@ -228,10 +230,11 @@ public class TraitCellHolder
         if(valid.get(other) == 1)
         {
             index = 0;
-            while(index < size * size - 1 && places.get(index) > -1 && valid.get(places.get(index)) != 0)
+            while(index < places.size()-1 && places.get(index) > -1 && valid.get(places.get(index)) != 0)
             {
                 index++;
             }
+
 
             valid.put(places.get(index), 1);
         }

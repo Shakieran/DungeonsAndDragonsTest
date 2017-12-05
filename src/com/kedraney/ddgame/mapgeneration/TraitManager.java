@@ -86,20 +86,13 @@ public class TraitManager
         for(TraitCellHolder map: tMaps)
         {
             lands = map.getLands();
-//            System.out.println("This many lands bitch: " + lands.size());
-            boolean tester;
+            System.out.println("This many lands bitch: " + lands.size());
 
             for(int y = 0; y < size; y++)
             {
                 for(int x = 0; x < size; x++)
                 {
-                    tester = false;
-                    for(int i = 0; i < lands.size(); i++)
-                    {
-                        if(lands.get(i)==MapNode.createID(x, y))
-                            tester = true;
-                    }
-                    if(tester)
+                    if(lands.contains(MapNode.createID(x, y)))
                         System.out.print("1 ");
                     else
                         System.out.print("0 ");

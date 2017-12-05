@@ -9,7 +9,7 @@ public class MapRandomGen
 	private final int maps = 3;
 	private final int mapType;
 	
-	private final int size = 20;//For testing purposes so we don't need to deal with a 100 x 100 grid
+	private final int size = 100;//For testing purposes so we don't need to deal with a 100 x 100 grid
 	private int sum =  4;
 	private int river = 2;
 	private double frequency = Math.PI/size;
