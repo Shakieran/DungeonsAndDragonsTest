@@ -1,4 +1,6 @@
-package com.kedraney.ddgame.mapgeneration;
+package GameData.Deprecated;
+
+import com.kedraney.ddgame.mapgeneration.MapNode;
 
 import java.math.*;
 import java.util.*;

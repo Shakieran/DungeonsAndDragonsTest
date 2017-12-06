@@ -1,4 +1,4 @@
-package com.kedraney.ddgame.mapgeneration;
+package GameData.Deprecated;
 
 /**
  * Created by USER on 7/2/2017.
