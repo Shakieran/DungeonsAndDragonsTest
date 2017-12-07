@@ -35,10 +35,13 @@
       <file leaf-file-name="BorderDrawer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/BorderDrawer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="25" column="64" lean-forward="true" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
+            <state relative-caret-position="441">
+              <caret line="45" column="54" lean-forward="false" selection-start-line="45" selection-start-column="54" selection-end-line="45" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#BorderMaker#0;class#BorderMaker#0" expanded="false" />
+                <element signature="method#pop#0;class#BorderMaker#0" expanded="false" />
+                <element signature="method#remove#0;class#BorderMaker#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -95,13 +98,13 @@
         <option value="$PROJECT_DIR$/src/GameData/database/TraitManager.java" />
         <option value="$PROJECT_DIR$/src/GameData/Deprecated/TraitManager.java" />
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/MapCreationManager.java" />
-        <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/RiverPath.java" />
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/MapRiverMaker.java" />
         <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/BorderDrawer.java" />
+        <option value="$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/RiverPath.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-9" />
     <option name="y" value="-9" />
     <option name="width" value="1938" />
@@ -265,6 +268,16 @@
               <item name="kedraney" type="462c0819:PsiDirectoryNode" />
               <item name="ddgame" type="462c0819:PsiDirectoryNode" />
               <item name="mapgeneration" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DungeonsAndDragons" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DungeonsAndDragons" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="kedraney" type="462c0819:PsiDirectoryNode" />
+              <item name="ddgame" type="462c0819:PsiDirectoryNode" />
+              <item name="mapgeneration" type="462c0819:PsiDirectoryNode" />
+              <item name="RiverPath.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
             <path>
               <item name="DungeonsAndDragons" type="b2602c69:ProjectViewProjectNode" />
@@ -700,7 +713,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -778,7 +791,7 @@
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="22" />
+      <option name="time" value="23" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1093,6 +1106,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#822#842#0" expanded="false" />
+            <element signature="method#setUpLand#0;class#TraitManager#0" expanded="false" />
+            <element signature="method#getVal#0;class#TraitManager#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1100,6 +1119,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
           <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="method#pop#1;class#TraitCellHolder#0" expanded="false" />
+            <element signature="method#setForeignLands#0;class#TraitCellHolder#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1152,19 +1176,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/RiverPath.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-118">
-          <caret line="45" column="9" lean-forward="true" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
-          <folding>
-            <element signature="e#1192#1203#0" expanded="false" />
-            <element signature="method#getDirection#0;class#RiverPath#0" expanded="false" />
-            <element signature="method#coorPercent#0;class#RiverPath#0" expanded="false" />
-            <element signature="class#RiverNode#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/MapRiverMaker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
@@ -1185,12 +1196,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/RiverPath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="176" column="81" lean-forward="true" selection-start-line="176" selection-start-column="81" selection-end-line="176" selection-end-column="81" />
+          <folding>
+            <element signature="method#RiverPath#0;class#RiverPath#0" expanded="false" />
+            <element signature="e#1192#1203#0" expanded="false" />
+            <element signature="method#getDirection#0;class#RiverPath#0" expanded="false" />
+            <element signature="class#RiverNode#0" expanded="false" />
+            <element signature="method#RiverNode#0;class#RiverNode#0" expanded="false" />
+            <element signature="method#equals#0;class#RiverNode#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/kedraney/ddgame/mapgeneration/BorderDrawer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="25" column="64" lean-forward="true" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
+        <state relative-caret-position="441">
+          <caret line="45" column="54" lean-forward="false" selection-start-line="45" selection-start-column="54" selection-end-line="45" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#BorderMaker#0;class#BorderMaker#0" expanded="false" />
+            <element signature="method#pop#0;class#BorderMaker#0" expanded="false" />
+            <element signature="method#remove#0;class#BorderMaker#0" expanded="false" />
           </folding>
         </state>
       </provider>

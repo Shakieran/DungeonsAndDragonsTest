@@ -174,7 +174,7 @@ public class RiverPath
             coor =- 2;
         }
 
-        return .35 * Math.sin(Math.PI/4.0 * coor) + .5;
+        return .25 * Math.sin(Math.PI/4.0 * coor) + .5;//was .35 -- slight change
     }
 
     public int getLength()
