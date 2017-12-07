@@ -82,10 +82,19 @@ public class RiverPath
             }
         }//at this point the arraylist has the complete collection of river nodes
 
-        if(map[0][riverNodes.get(riverNodes.size()-1).getY()][riverNodes.get(riverNodes.size()-1).getX()] == 0)//just makes it so if it ends in water that cell
+        //makes sure we don't count water tiles
+ /*       for(int index = 0; index < riverNodes.size(); index++)
+        {
+            if(map[1][riverNodes.get(index).getY()][riverNodes.get(index).getX()] == 0)
+            {
+                riverNodes.remove(index);
+                index--;
+            }
+        }*/
+        /*if(map[0][riverNodes.get(riverNodes.size()-1).getY()][riverNodes.get(riverNodes.size()-1).getX()] == 0)//just makes it so if it ends in water that cell
         {//                                                                                                    won't count
             riverNodes.remove(riverNodes.size()-1);
-        }
+        }*/
 
         length = riverNodes.size();
     }
