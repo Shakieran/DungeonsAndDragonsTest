@@ -41,6 +41,7 @@ public class MapCreationManager
 		//Now that we know it's all the same, we begin with the more specific creation features
 		mapForestBuilder = new MapForestBuilder(.75, mapAttributes[0], mapAttributes[1]);
 		mapRiverMaker = new MapRiverMaker(mapAttributes);
+//		mapRiverMaker = new MapRiverMaker();
 		mapAttributes[2] = mapForestBuilder.getForest();
 
 //		raceTraitCalculator = new RaceTraitCalculator(mapAttributes);
@@ -76,7 +77,7 @@ public class MapCreationManager
 				}
 				System.out.println();
 			}
-			System.out.println("\n-----------------------MAP_UP--" + i + "--------------------------------\n");
+			System.out.println("-----------------------MAP_UP--" + i + "--------------------------------");
 		}
 /*
 		mapRiverCrafter = new MapRivers(mapAttributes[0], mapAttributes[1], .1, 0.0, .02);

@@ -9,15 +9,32 @@ public class MapRiverMaker
 
     private final int size, increment;
 
+   /* public MapRiverMaker()
+    {
+        size = 0;
+        increment = 0;
+
+        RiverPath x = new RiverPath();
+    }*/
+
     public MapRiverMaker(int[][][] daMap)
     {
         map = daMap;
         size = map[0].length;
-        increment = (int)(Math.pow(size, .6667)/2.0);
+//        increment = (int)(Math.pow(size, .6667)/2.0);
+        increment = 5;
 
         int sum, sum2, num;
         int squareSize = (int)(.5 + (double)size/increment);
-        boolean remainder = squareSize == (int)((double)size/increment);//if there is a remainder, this is true
+//        boolean remainder = !(squareSize == (int)((double)size/increment));//if there is a remainder, this is true
+        boolean remainder;
+
+        if(squareSize == (double)size/increment)
+            remainder = false;
+        else
+            remainder = true;
+
+
         altitudeSquares = new double[squareSize][squareSize];
 
         if(remainder)
@@ -25,16 +42,25 @@ public class MapRiverMaker
             squareSize -= 2;
         }
 
+        int tempMultLimit = squareSize;
 
-        for(int xMult = 0; xMult < squareSize; xMult++)
+        if(increment < squareSize)
         {
-            for(int yMult = 0; yMult < squareSize; yMult++)//these values cycle through the standard values for the shapes and all that
+            tempMultLimit = increment;//DEBUG LATER
+        }
+
+//        System.out.println(remainder);
+
+        for(int xMult = 0; xMult < tempMultLimit; xMult++)//was squareSize instead of increment
+        {
+            for(int yMult = 0; yMult < tempMultLimit; yMult++)//these values cycle through the standard values for the shapes and all that
             {
                 sum = 0;
                 for(int y = 0; y < squareSize; y++)
                 {
                     for(int x = 0; x < squareSize; x++)
                     {
+//                        System.out.println(y + " + " + yMult + " * " + squareSize + " --- " + x + " + " + xMult + " * " + squareSize);
                         sum += map[1][y + yMult * squareSize][x + xMult * squareSize];//altitude sums and all that jazz
                     }
                 }
@@ -45,7 +71,7 @@ public class MapRiverMaker
 
         if(remainder)
         {
-//            squareSize++;
+            squareSize--;
             for(int multRollouts = 0; multRollouts < squareSize + 1; multRollouts++)
             {
                 sum = 0;
@@ -90,14 +116,34 @@ public class MapRiverMaker
 
             if(Math.random() > getChance(map[1][y][x]))
             {
-                rivers.add(new RiverPath(map, x, y, squareSize));
-                totalRivers += rivers.get(rivers.size()-1).getLength();
+                rivers.add(new RiverPath(map, x, y, squareSize, altitudeSquares));
+                if(rivers.get(rivers.size()-1).getLength() == 1)
+                {
+                    rivers.remove(rivers.size() - 1);
+                }
+                else
+                {
+                    totalRivers += rivers.get(rivers.size()-1).getLength();
+                }
             }
-            if(true)/*Something with total rivers so we get x distance at least but what about with varying sizes #ect.*/
+            if(totalRivers > 100)/*Something with total rivers so we get x distance at least but what about with varying sizes #ect.*/
             {
                 running = false;
             }
         }
+        //below prints out each river's contents
+        System.out.println("#$%^&*(#$&*$#$((");
+
+        for (RiverPath river: rivers)
+        {
+            System.out.println("A New River Flows:");
+            for(RiverNode node: river.getRiverNodes())
+            {
+                System.out.println(node.getID());
+            }
+        }
+
+        System.out.println("&&&*&%(*$&$#^%$^^*@$^^%^%$#");
     }
 
     //random chance based on altitude that there will be a river there
