@@ -6,6 +6,7 @@ public class MapRiverMaker
 {
     private int[][][] map;
     private double[][] altitudeSquares;//holds the average height for the squares
+    private ArrayList<RiverPath> rivers;
 
     private final int size, increment;
 
@@ -101,10 +102,15 @@ public class MapRiverMaker
         createRivers(squareSize);
     }
 
+    public ArrayList<RiverPath> getRivers()
+    {
+        return rivers;
+    }
+
     //creates all teh rivers
     private void createRivers(int squareSize)
     {
-        ArrayList<RiverPath> rivers = new ArrayList<>();
+        rivers = new ArrayList<>();
         int x, y;
         int totalRivers = 0;
         boolean running = true;

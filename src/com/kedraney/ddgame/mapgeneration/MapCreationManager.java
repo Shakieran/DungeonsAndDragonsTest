@@ -11,6 +11,7 @@ public class MapCreationManager
 	private static MapParser mapParse;//Creates arraylists for each contiguous land mass
 	private static MapForestBuilder mapForestBuilder;//creates the forest distribution
 	private static MapRiverMaker mapRiverMaker;
+	private static BorderDrawer borderDrawer;
 //	private static MapRivers mapRiverCrafter;//crafts the rivers of the map
 //	private static RaceTraitCalculator raceTraitCalculator;//calculates trait maps
 //	private static TraitManager traitManager;//essentially is the creator of political boundaries and what not
@@ -41,6 +42,7 @@ public class MapCreationManager
 		//Now that we know it's all the same, we begin with the more specific creation features
 		mapForestBuilder = new MapForestBuilder(.75, mapAttributes[0], mapAttributes[1]);
 		mapRiverMaker = new MapRiverMaker(mapAttributes);
+		borderDrawer = new BorderDrawer(2, mapRiverMaker.getRivers(), mapAttributes, heightProfiler.getMaxHeight());
 //		mapRiverMaker = new MapRiverMaker();
 		mapAttributes[2] = mapForestBuilder.getForest();
 

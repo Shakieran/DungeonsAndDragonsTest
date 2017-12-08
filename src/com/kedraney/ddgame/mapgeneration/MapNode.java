@@ -81,6 +81,11 @@ public class MapNode implements Comparable<MapNode>
 	{
 		return (int)((id - (id % 100))/100);
 	}
+
+	public static double getDistance(int id1, int id2)
+	{
+		return Math.sqrt(Math.pow(MapNode.getIDX(id2) - MapNode.getIDX(id1),2.0) + Math.pow(MapNode.getIDY(id2) - MapNode.getIDY(id1),2.0));//distance formula
+	}
 	
 	public int getID()
 	{
